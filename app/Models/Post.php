@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model{
     use HasFactory;
 
-    protected $user_post =[
-        'post_id',
+    protected $fillable =[
         'post_content',
         'image_url',
         'post_date',
@@ -19,9 +18,15 @@ class Post extends Model{
     ];
 
     public function user(){
-        return $this -> belongsTo('App\User');
+        return $this -> belongsTo(User::class);
     }
     function category(){
         return $this->belongsTo(Category::class);
+    }
+    public function tags(){
+        return $this -> belongsToMany(Tag::class);
+    }
+    public function likes(){
+        return $this -> hasMany(Like::class);
     }
 }

@@ -50,6 +50,10 @@ class User extends Authenticatable
     ];
 
     public function post(){
-        return $this -> belongsTo('App\Posts');
+        return $this -> belongsTo(Post::class);
+    }
+
+    public function likes(){
+        return $this -> hasMany(Like::class);
     }
 }

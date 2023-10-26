@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('likes', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
+            $table -> unsignedBigInteger('user_id');
+            $table -> unsignedBigInteger('post_id');
             $table->timestamps();
         });
     }
@@ -24,4 +26,6 @@ return new class extends Migration
     {
         Schema::dropIfExists('likes');
     }
+
+   
 };

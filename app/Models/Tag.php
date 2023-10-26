@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Tag extends Model{
     use HasFactory;
 
-    public $tags = [
+    public $fillable = [
         'id',
         'name'
 
@@ -17,5 +17,5 @@ class Tag extends Model{
     public function posts(){
         return $this -> belongsToMany(Post::class);
     }
-    
+
 }
