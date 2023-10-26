@@ -17,4 +17,8 @@ class Comment extends Model
         'time',
         'feedback'
     ];
+
+    public function user(){
+        return $this -> belongsTo('App\User');
+    }
 }

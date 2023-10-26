@@ -11,16 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('comments', function (Blueprint $table) {
-            $table->bigIncrements('comments_id');
-            $table -> string('comment_content');
-            $table -> string('feed_back');
-            $table -> dateTime('date');
-            $table -> dateTime('time');
-
-
-
-      
+        Schema::create('tags', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table -> string('name');
+            $table->timestamps();
         });
     }
 
@@ -29,6 +23,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('comments');
+        Schema::dropIfExists('tags');
     }
+
+    
 };
