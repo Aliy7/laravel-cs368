@@ -9,7 +9,7 @@ class Tag extends Model{
     use HasFactory;
 
     public $fillable = [
-        'id',
+       
         'name'
 
     ];

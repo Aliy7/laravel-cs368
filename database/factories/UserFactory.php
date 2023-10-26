@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Factories;
+use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -15,14 +16,21 @@ class UserFactory extends Factory
      *
      * @return array<string, mixed>
      */
+   // protected $model = User::class;
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'user_name' => $this->faker->name(),
+            'email' => $this->faker->unique()->userName . '@swansea.ac.uk', 
+            'first_name' => $this->faker->firstName,
+            'last_name' => $this->faker->lastName,
+            'date_of_Birth' => $this->faker->date,
+            'phone_number' => $this->faker->phoneNumber,
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
+            'pass_word' => Hash::make('password'), 
+            'post_code' => $this -> faker->postcode,
+            'country' => 'United Kingdom',
+            'remember_token' => $this->faker->randomNumber(8),
         ];
     }
 
