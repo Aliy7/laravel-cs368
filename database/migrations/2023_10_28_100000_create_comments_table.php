@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->bigIncrements('comments_id');
-            $table -> string('comment_content');
+            $table -> text('comment_content');
             $table -> string('feed_back');
-            $table -> dateTime('date');
-            $table -> dateTime('time');
+            $table -> date('date');
+            $table -> time('time');
+            $table->timestamps();
+ 
 
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')

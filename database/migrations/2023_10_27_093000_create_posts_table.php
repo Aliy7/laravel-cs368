@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table ->string('post_content');
+            $table ->text('post_content');
             $table -> string ('image_url');
-            $table -> dateTime('post_date');
-            $table -> dateTime('post_time');
+            $table -> date('post_date');
+            $table -> time('post_time');
             $table->timestamps();
 
             $table->bigInteger('user_id')->unsigned();
