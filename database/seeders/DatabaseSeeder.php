@@ -18,15 +18,11 @@ class DatabaseSeeder extends Seeder{
 
         // \App\Models\User::factory(10)->create();
 
-         $this->call(UsersSeeder::class);
-         $this->call(PostSeeder::class);
-         $this->call(CommentsSeeder::class);
-         $this->call(CategorySeeder::class);
-$this->call(LikesSeeder::class);
-       // User::factory()->count(20)->create();
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $this->call(UsersSeeder::class);
+        $this->call(PostSeeder::class);
+        $this->call(CommentsSeeder::class);
+        $this->call(CategorySeeder::class);
+        $this->call(LikesSeeder::class);
+       
     }
 }

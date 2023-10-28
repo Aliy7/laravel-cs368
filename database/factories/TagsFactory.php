@@ -3,12 +3,11 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Post;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Category>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class CategoryFactory extends Factory
+class TagsFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,15 +16,8 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
-       
-
         return [
             //
-            'cat_name' => $this->faker->word,
-           
-
-            'post_id' => Post::all()->random()->id ?? Post::factory(),
-
         ];
     }
 }

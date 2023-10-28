@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Models;
+use Illuminate\Support\Facades\Log;
+
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -56,4 +58,11 @@ class User extends Authenticatable
     public function likes(){
         return $this -> hasMany(Like::class);
     }
+    protected static function booted()
+{
+    static::creating(function ($user) {
+        Log::info('User is being created', ['user' => $user->toArray()]);
+    });
+}
+
 }

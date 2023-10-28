@@ -18,9 +18,10 @@ class PostFactory extends Factory {
      */
     public function definition(): array
     {
-        $user = User::factory()->create();
+       // $user = User::factory()->create();
         return [
-            'user_id' => $user->id, 
+            // 'user_id' => User::factory(),
+            'user_id' => User::all()->random()->id ?? User::factory(),
             'post_content' => $this->faker->paragraph(6),
             'image_url' => $this->faker->imageUrl(),
             'post_date' => $this->faker->date,

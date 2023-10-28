@@ -19,12 +19,12 @@ class LikeFactory extends Factory
      */
     public function definition(): array
     {
-        $post = Post::factory() -> create();
-
-            $user = User::factory()->create();
+        
             return [
-                'user_id' => $user->id,
-                'post_id' => $post->id
+                'user_id' => User::all()->random()->id ?? User::factory(),
+
+                'post_id' => Post::all()->random()->id ?? Post::factory(),
+
             //
         ];
     }
