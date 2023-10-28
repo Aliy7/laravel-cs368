@@ -1,6 +1,9 @@
 <?php
 
 namespace Database\Factories;
+use App\Models\User;
+use App\Models\Post;
+
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -16,7 +19,12 @@ class LikeFactory extends Factory
      */
     public function definition(): array
     {
-        return [
+        $post = Post::factory() -> create();
+
+            $user = User::factory()->create();
+            return [
+                'user_id' => $user->id,
+                'post_id' => $post->id
             //
         ];
     }
