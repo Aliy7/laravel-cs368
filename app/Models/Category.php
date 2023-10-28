@@ -11,8 +11,8 @@ class Category extends Model
     use HasFactory;
 
     public $category=[
-        'id',
-        'name'
+        
+        'cat_name'
     ];
     public function posts(){
         return $this -> hasMany(Post::class);

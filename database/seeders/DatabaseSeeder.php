@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Category;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -19,7 +21,7 @@ class DatabaseSeeder extends Seeder{
          $this->call(UsersSeeder::class);
          $this->call(PostSeeder::class);
          $this->call(CommentsSeeder::class);
-
+         $this->call(CategorySeeder::class);
 
        // User::factory()->count(20)->create();
         // \App\Models\User::factory()->create([
