@@ -18,13 +18,11 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
        
-
+        $categoryNames = ['Technology', 'Health', 'Education', 'Travel', 'Food', 'Fashion', 'Music', 'Movies', 'Sports', 'Lifestyle'];
         return [
             //
-            'cat_name' => $this->faker->word,
-           
-
-            'post_id' => Post::all()->random()->id ?? Post::factory(),
+            'cat_name' => $this->faker->randomElement($categoryNames),
+            'post_id' => Post::count() ? Post::all()->random()->id : Post::factory()->create()->id,
 
         ];
     }

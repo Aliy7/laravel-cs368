@@ -21,9 +21,9 @@ class LikeFactory extends Factory
     {
         
             return [
-                'user_id' => User::all()->random()->id ?? User::factory(),
+                'user_id' => User::count() ? User::all()->random()->id : User::factory()->create()->id,
 
-                'post_id' => Post::all()->random()->id ?? Post::factory(),
+                'post_id' => Post::count() ? Post::all()->random()->id : Post::factory()->create()->id,
 
             //
         ];

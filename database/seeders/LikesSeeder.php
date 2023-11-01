@@ -15,6 +15,7 @@ class LikesSeeder extends Seeder
     
     {
         Like::factory(20)->create();
+              //  Category::factory(20)->create();
 
     }
 }

@@ -60,9 +60,9 @@ class User extends Authenticatable
     }
     protected static function booted()
 {
-    static::creating(function ($user) {
-        Log::info('User is being created', ['user' => $user->toArray()]);
-    });
+    // static::creating(function ($user) {
+    //     Log::info('User is being created', ['user' => $user->toArray()]);
+    // });
 }
 
 }

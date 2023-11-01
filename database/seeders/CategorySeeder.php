@@ -11,7 +11,14 @@ class CategorySeeder extends Seeder
 {
 
     public function run(): void {
-        Category::factory(20)->create();
+        $post_size = 20;
+        $posts = Post::factory()->count($post_size)->create();
+        
+        foreach ($posts as $post) {
+            Category::factory()->create(['post_id' => $post->id]);
+        }
+        
+
         
     }    
 }
