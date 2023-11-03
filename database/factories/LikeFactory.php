@@ -21,11 +21,16 @@ class LikeFactory extends Factory
     {
         
             return [
-                'user_id' => User::count() ? User::all()->random()->id : User::factory()->create()->id,
+           
+                /**This line gets a random user ID from the database. 
+                 * If there are no users, it creates a new user 
+                 * and gets its ID. */
+                'user_id' => User::inRandomOrder()->first()->id ?? User::factory()->create()->id,
+                'post_id' => Post::inRandomOrder()->first()->id ?? Post::factory()->create()->id,
 
-                'post_id' => Post::count() ? Post::all()->random()->id : Post::factory()->create()->id,
-
-            //
+                /**Generates either 1 or -1  - One for like and -1 for unlike */
+                'value' => $this->faker->randomElement([1, -1]), 
+            
         ];
     }
 }

@@ -26,7 +26,7 @@ class UserFactory extends Factory
             'date_of_Birth' => $this->faker->date,
             'phone_number' => $this->faker->phoneNumber,
             'email_verified_at' => now(),
-            'pass_word' => Hash::make('password'), 
+            'password' => Hash::make('password'), 
             'post_code' => $this -> faker->postcode,
             'country' => 'United Kingdom',
             'remember_token' => $this->faker->randomNumber(8),

@@ -11,14 +11,13 @@ class CategorySeeder extends Seeder
 {
 
     public function run(): void {
-        $post_size = 20;
-        $posts = Post::factory()->count($post_size)->create();
-        
-        foreach ($posts as $post) {
-            Category::factory()->create(['post_id' => $post->id]);
-        }
-        
+   
+     // Create some categories
+     $categories = Category::factory()->count(20)->create();
 
-        
+     // Assign a random category to each post
+     Post::all()->each(function ($post) use ($categories) {
+         $post->update(['category_id' => $categories->random()->id]);
+     });
     }    
 }

@@ -2,9 +2,7 @@
 
 namespace App\Models;
 use Illuminate\Support\Facades\Log;
-
-
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -20,15 +18,15 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'userName',
+        'user_name',
         'email',
         'first_name',
-        'pass_word',
+        'password',
         'Last_name',
         'date_of_Birth',
+        'city',
         'postcode',
         'country',
-        'phone_number'
     ];
 
     /**
@@ -58,11 +56,15 @@ class User extends Authenticatable
     public function likes(){
         return $this -> hasMany(Like::class);
     }
-    protected static function booted()
-{
-    // static::creating(function ($user) {
-    //     Log::info('User is being created', ['user' => $user->toArray()]);
-    // });
+
+    public function profile(): HasOne{
+        return $this -> hasOne(Profile::class);
+    }
+    
+    protected static function booted(){
+    static::creating(function ($user) {
+        Log::info('User is being created', ['user' => $user->toArray()]);
+     });
 }
 
 }

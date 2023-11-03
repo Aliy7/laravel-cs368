@@ -9,6 +9,9 @@ class Like extends Model{
     use HasFactory;
 
     public $fillable = [
+        'user_id',
+        'post_id',
+        'value'
          
     ];
 

@@ -12,11 +12,11 @@ class Post extends Model{
         'post_content',
         'image_url',
         'post_date',
-        'post_time'
-
+        'post_time',
+        'user_id',
+        'category_id'
 
     ];
-
     public function user(){
         return $this -> belongsTo(User::class);
     }
@@ -26,5 +26,8 @@ class Post extends Model{
    
     public function likes(){
         return $this -> hasMany(Like::class);
+    }
+    public function comments(){
+        return $this -> hasMany(Comment :: class);
     }
 }

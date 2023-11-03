@@ -15,10 +15,6 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table ->string('cat_name');
             $table->timestamps();
-
-            $table -> unsignedBigInteger('post_id')->unique();
-
-            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
         });
     }
 
