@@ -23,8 +23,6 @@ class UserFactory extends Factory
             'email' => $this->faker->unique()->userName . '@swansea.ac.uk', 
             'first_name' => $this->faker->firstName,
             'last_name' => $this->faker->lastName,
-            'date_of_Birth' => $this->faker->date,
-            'phone_number' => $this->faker->phoneNumber,
             'email_verified_at' => now(),
             'password' => Hash::make('password'), 
             'post_code' => $this -> faker->postcode,

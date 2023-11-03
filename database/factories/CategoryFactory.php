@@ -18,10 +18,11 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
        
-        $categoryNames = ['Games', 'Health', 'Nighouts', 'Travel', 'JunkFood', 'Fashion', 
-        'Drillz', 'Pop', 'Football', 'Lifestyle', 'SkyDiving', 'Fortnight', 'Saufen'];
+        $categoryList = ['Gaming', 'Health', 'Nighouts', 'Travel', 'JunkFood', 'Fashion', 
+        'Drillz', 'Pop', 'Football', 'Lifestyle', 'SkyDiving', 'Fortnight', 'Saufen',
+        'Rennen','SelbstSchuld','TierenWacht'];
         return [
-            'cat_name' => $this->faker->randomElement($categoryNames),
+            'cat_name' => $this->faker->randomElement($categoryList),
         ];
     }
 }

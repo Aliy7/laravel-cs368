@@ -15,12 +15,12 @@ class Profile extends Model
         'phone_number',
         'bio',
         'date_of_birth',
-        'website_link',
-        'location'
+        'website_url',
+        'location',
 
     ];
 
     public function user(){
-        retunr $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 }

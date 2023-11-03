@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder{
         $this->call(CommentsSeeder::class);
         $this->call(CategorySeeder::class);
         $this->call(LikesSeeder::class);
+        $this->call(ProfileSeeder::class);
        
     }
 }

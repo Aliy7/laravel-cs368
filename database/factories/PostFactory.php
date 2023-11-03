@@ -18,9 +18,7 @@ class PostFactory extends Factory {
      */
     public function definition(): array
     {
-       // $user = User::factory()->create();
         return [
-            // 'user_id' => User::factory(),
             'user_id' => User::count() ? User::all()->random()->id : User::factory()->create()->id,
             'post_content' => $this->faker->paragraph(6),
             'image_url' => $this->faker->imageUrl(),
