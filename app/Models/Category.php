@@ -12,7 +12,7 @@ class Category extends Model
 
     public $category=[
         
-        'cat_name'
+        'cat_name',
     ];
     public function posts(){
         return $this -> hasMany(Post::class);

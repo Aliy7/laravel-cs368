@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\User;
+
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Profile>
  */
@@ -16,17 +17,15 @@ class ProfileFactory extends Factory
      */
     public function definition(): array
     {
+        $users = User::all();
         return [
-          // Assign a random existing user's ID or create a new user if none exist.
-          'user_id' => User::all()->random()->id ?? User::factory(),            
-           'bio' => $this->faker->sentence,
-            'avatar' => $this->faker->imageUrl(320, 350, 'human'),
-            'phone_number' => $this->faker->phoneNumber,
-            'date_of_birth' => $this->faker->date,
-            'website_url' => $this->faker->url,
-            'location' => $this->faker->city,
-    
-            //
+           'user_id' => fake()->unique()->numberBetween(1, $users->count()),
+            'bio' => fake()->sentence,
+            'profile_picture' => fake()->imageUrl(320, 350, 'people'),
+            'phone_number' => fake()->phoneNumber,
+            'date_of_birth' => fake()->date,
+            'website_url' => fake()->url,
+            'location' => fake()->city,
         ];
     }
 }

@@ -5,7 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model{
+class Post extends Model
+{
     use HasFactory;
 
     protected $fillable =[
@@ -14,7 +15,7 @@ class Post extends Model{
         'post_date',
         'post_time',
         'user_id',
-        'category_id'
+        'category_id',
 
     ];
     public function user(){

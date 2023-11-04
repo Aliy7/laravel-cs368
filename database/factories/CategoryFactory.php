@@ -1,7 +1,6 @@
 <?php
 
 namespace Database\Factories;
-
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Post;
 
@@ -20,9 +19,9 @@ class CategoryFactory extends Factory
        
         $categoryList = ['Gaming', 'Health', 'Nighouts', 'Travel', 'JunkFood', 'Fashion', 
         'Drillz', 'Pop', 'Football', 'Lifestyle', 'SkyDiving', 'Fortnight', 'Saufen',
-        'Rennen','SelbstSchuld','TierenWacht'];
+        'Rennen','Schuldfrei','TierenWacht', 'Octoberfest','Volkfest'];
         return [
-            'cat_name' => $this->faker->randomElement($categoryList),
+            'cat_name' =>fake()->randomElement($categoryList),
         ];
     }
 }

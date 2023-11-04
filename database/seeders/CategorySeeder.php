@@ -12,12 +12,12 @@ class CategorySeeder extends Seeder
 
     public function run(): void {
    
-     // Create some categories
+     // Create twenty categories 
      $categories = Category::factory()->count(20)->create();
 
-     // Assign a random category to each post
-     Post::all()->each(function ($post) use ($categories) {
-         $post->update(['category_id' => $categories->random()->id]);
+        // Assign a random category to each post
+        Post::all()->each(function ($post) use ($categories) {
+        $post->update(['category_id' => $categories->random()->id]);
      });
     }    
 }

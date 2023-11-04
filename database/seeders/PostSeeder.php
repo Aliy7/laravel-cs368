@@ -15,6 +15,6 @@ class PostSeeder extends Seeder
     {
         $post_size =20;
         Post::factory()->count($post_size)->create();
-        //
+        
     }
 }

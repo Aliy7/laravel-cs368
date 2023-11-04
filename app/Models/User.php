@@ -60,11 +60,7 @@ class User extends Authenticatable
     public function profile(): HasOne{
         return $this -> hasOne(Profile::class);
     }
-    
-    protected static function booted(){
-    static::creating(function ($user) {
-        Log::info('User is being created', ['user' => $user->toArray()]);
-     });
-}
 
 }
+
+

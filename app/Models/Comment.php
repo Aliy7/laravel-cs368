@@ -11,11 +11,11 @@ class Comment extends Model
     use HasFactory;
 
     protected $fillable=[
-        
         'comment_content',
+        'feed_back',
         'date',
         'time',
-        'feedback'
+        'feedback',
     ];
 
     public function user(){

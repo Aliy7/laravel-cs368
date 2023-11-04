@@ -18,10 +18,9 @@ return new class extends Migration
             $table->date('post_date');
             $table->time('post_time');
             $table->timestamps();
+            
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-        
-            // Here we add the category_id foreign key, indicating that a post belongs to a category
             $table->bigInteger('category_id')->unsigned()->nullable();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null')->onUpdate('cascade');
         });

@@ -10,7 +10,6 @@ use App\Models\User;
  */
 class PostFactory extends Factory {
 
-   
     /**
      * Define the model's default state.
      *
@@ -18,14 +17,18 @@ class PostFactory extends Factory {
      */
     public function definition(): array
     {
+        
         return [
+            /**
+            * If there are users in the database, select a random user's ID.
+            * Otherwise create a new user and use existing user's ID
+            */
             'user_id' => User::count() ? User::all()->random()->id : User::factory()->create()->id,
-            'post_content' => $this->faker->paragraph(6),
-            'image_url' => $this->faker->imageUrl(),
-            'post_date' => $this->faker->date,
-            'post_time' => $this->faker->time
+            'post_content' => fake()->paragraph(6),
+            'image_url' => fake()->imageUrl(),
+            'post_date' => fake()->date,
+            'post_time' => fake()->time
 
-            //
         ];
     }
 }
