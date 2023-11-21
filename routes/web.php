@@ -26,6 +26,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    //demo only admin Route
+   
 });
 
-require __DIR__.'/auth.php';
+ //demo only admin Route
+// Admin-only routes
+Route::middleware('role:admin')->group(function () {
+    // Example admin route
+    Route::get('/admin/settings', function () {
+        // Admin settings view
+        return view('admin.settings');
+    })->name('admin.settings');
+
+})
+;require __DIR__.'/auth.php';
