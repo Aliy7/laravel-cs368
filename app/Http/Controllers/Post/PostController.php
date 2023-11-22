@@ -35,10 +35,22 @@ class PostController extends Controller
         return redirect()->route('dashboard')->with('success', 'Post created successfully');
         //return redirect()->route('post.show', $post->id)->with('success', 'Post created successfully');
     }
-    // public function show(Post $post) {
-    //     return view('post.show', compact('post'));
-    // }
+    public function show($id ) {
+
+        $post = Post::findOrFail($id);
+
+        return view('posts.show', compact('post'));
+    }
     
+    public function index(){
+        return view('dashboard', compact('post'));
+    }
     
+    public function showLoggedUser()
+{
+    // Fetch only posts belonging to the authenticated user
+    $posts = Post::where('user_id', Auth::id())->get();
+    return redirect()->route('dashboard')->with('success', 'Post created successfully');
+}
 }
 

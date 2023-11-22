@@ -17,9 +17,11 @@ class DashboardController extends Controller
     return view('dashboard', compact('posts')); 
 }
 
-// public function indexs(){
-//     $categories = Category::all();
-//     dd($categories);
-//     return view('dashboard', compact('categories')); 
-// }
+public function show($id ) {
+    $post = Post::findOrFail($id);
+    return view('posts.show', compact('post'));
+}
+
+
+
 }

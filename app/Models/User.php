@@ -49,9 +49,9 @@ class User extends Authenticatable
     /**
      * User's relationship with Post.
      */
-    public function post()
+    public function posts()
     {
-        return $this->belongsTo(Post::class);
+        return $this->hasMany(Post::class, 'user_id');
     }
 
     /**
@@ -95,4 +95,10 @@ class User extends Authenticatable
         }
         return false;
     }
+
+    public function showProfile($id)
+{
+    $user = User::with('posts')->findOrFail($id); // Assuming you have a posts relationship in your User model
+    return view('users.profile', compact('user'));
+}
 }

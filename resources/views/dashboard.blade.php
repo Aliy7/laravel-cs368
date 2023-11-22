@@ -23,10 +23,11 @@
         </h2>
     </x-slot>
 
-    @include('post.create-post')
+    @include('posts.create-post')
+    @include('posts.show')
 
 
-    {{-- <h1> Hi, are you still there?</h1>
+{{-- <h1> Hi, are you still there?</h1>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <!-- Posts Section -->
@@ -45,7 +46,7 @@
                         </div>
                     @endforeach
                 </div>
-            </div> --}}
+            </div>  --}}
             <!-- End of Posts Section -->
 
             <!-- Creating post-->
