@@ -3,20 +3,25 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
-{
+use App\Models\Category;
+use Illuminate\Database\Seeder;
+use App\Models\User;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+class DatabaseSeeder extends Seeder{
+    use WithoutModelEvents;
     /**
      * Seed the application's database.
      */
-    public function run(): void
-    {
-        // \App\Models\User::factory(10)->create();
+    public function run(): void {
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $this->call(UserSeeder::class);
+        $this->call(PostSeeder::class);
+        $this->call(CommentSeeder::class);
+        $this->call(CategorySeeder::class);
+        $this->call(LikeSeeder::class);
+        $this->call(ProfileSeeder::class);
+       
     }
 }

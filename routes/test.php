@@ -8,3 +8,6 @@ Route::get('/send-test-mail', function () {
 
     return 'Email sent successfully!';
 });
+
+Route::get('/dashboard', [DashboardController::class, 'index']
+)->middleware(['auth', 'verified'])->name('dashboard.index');

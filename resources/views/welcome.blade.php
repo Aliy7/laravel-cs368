@@ -6,10 +6,6 @@
 
         <title>Laravel</title>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
@@ -27,7 +23,7 @@
                 </div>
 
                 
-
+<h1> Tell me something cool </h1>
                        
 
                 <div class="flex justify-center mt-16 px-0 sm:items-center sm:justify-between">

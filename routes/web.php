@@ -1,7 +1,12 @@
 <?php
+//namespace App\Http\Controllers;
+namespace App\Http\Controllers\Post;
 
 use App\Http\Controllers\ProfileController;
+
 use Illuminate\Support\Facades\Route;
+use App\Models\Post; 
+use App\Http\Controllers\Post\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,27 +23,34 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//Route::get('/post/{id}', [PostController::class, 'show'])->name('post.show');
+
+// Route::get('/dashboard', [DashboardController::class, 'index']
+// )->middleware(['auth', 'verified'])->name('dashboard.index');
+
+
+Route::get('/post/create', [PostController::class, 'create'])->middleware('auth')->name('post.create');
+
+// ...
+
+Route::post('/post', [PostController::class, 'store'])->middleware('auth')->name('post.store');
+
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $posts = Post::all(); // Fetch all posts
+    return view('dashboard', compact('posts'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    //demo only admin Route
-   
 });
 
- //demo only admin Route
-// Admin-only routes
-Route::middleware('role:admin')->group(function () {
-    // Example admin route
-    Route::get('/admin/settings', function () {
-        // Admin settings view
-        return view('admin.settings');
-    })->name('admin.settings');
 
-})
-;require __DIR__.'/auth.php';
+Route::prefix('admin')->group(function(){
+
+    Route::get('/dashboard', [DashboardController::class, 'index']);
+});
+
+
+require __DIR__.'/auth.php';

@@ -34,4 +34,15 @@ class RoleManagement extends Component
     {
         return view('livewire.user-role-management');
     }
+    public function assignRole($userId)
+{
+    if(isset($this->selectedRoleId[$userId])) {
+        $user = User::find($userId);
+        if ($user) {
+            $user->roles()->sync($this->selectedRoleId[$userId]);
+            $this->dispatchBrowserEvent('notify', 'Role assigned successfully.');
+        }
+    }
+}
+
 }
