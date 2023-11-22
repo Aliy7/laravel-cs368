@@ -16,8 +16,11 @@ return new class extends Migration
             $table->text('title');
             $table->text('content');
             // $table->string('image_url');
-            $table->timestamps(); // Automatically creates created_at and updated_at
-            
+            $table->timestamps(); 
+            // $table ->timestamp('post_date') -> nullable();
+            // $table ->timestamp('post_time') -> nullable();
+
+           
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             

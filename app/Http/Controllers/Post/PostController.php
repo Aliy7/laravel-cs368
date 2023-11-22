@@ -25,13 +25,13 @@ class PostController extends Controller
         $post->title = $request->title;
         $post->content = $request->content;
         $post->user_id = Auth::id(); // Set the user ID to the currently authenticated user
-        $post->post_date = now()->toDateString();
-        $post->post_time = now()->toTimeString();
+        $post->created_at = now()->toDateString();
+        $post->updated_at= now()->toTimeString();
 
         $post->save();
 
-        $user = Auth::user();
-        dd($user);
+        // $user = Auth::user();
+        // dd($user);
         return redirect()->route('dashboard')->with('success', 'Post created successfully');
         //return redirect()->route('post.show', $post->id)->with('success', 'Post created successfully');
     }

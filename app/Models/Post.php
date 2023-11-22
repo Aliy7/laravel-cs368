@@ -35,15 +35,16 @@ class Post extends Model
         return $this -> hasMany(Comment :: class);
     }
 
-    protected static function boot()
-    {
-        parent::boot();
+    // protected static function boot()
+    // {
+    //     parent::boot();
 
-        // Automatically set post_date and post_time before creating a new Post
-        static::creating(function ($post) {
-            $now = Carbon::now();
-            $post->post_date = $now->toDateString();  // Date in Y-m-d format
-            $post->post_time = $now->toTimeString();  // Time in H:i:s format
-        });
-      }
+    //     // Automatically set post_date and post_time before creating a new Post
+    //     // static::creating(function ($post) {
+    //     //     $now = Carbon::now();
+    //     //     $post->post_date = $now->toDateString();  // Date in Y-m-d format
+    //     //     $post->post_time = $now->toTimeString();  // Time in H:i:s format
+    //     // });
+    //   }
+
 }

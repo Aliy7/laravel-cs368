@@ -26,9 +26,7 @@ class PostFactory extends Factory {
             'user_id' => User::count() ? User::all()->random()->id : User::factory()->create()->id,
             'title' =>fake()->word,
             'content' => fake()->paragraph(6),
-            //'image_url' => fake()->imageUrl(),
-            // 'post_date' => fake()->date,
-            // 'post_time' => fake()->time
+          
 
         ];
     }
