@@ -23,8 +23,13 @@
         </h2>
     </x-slot>
 
-    @include('posts.create-post')
-    @include('posts.show')
+   {{-- Create New Post Form --}}
+@include('posts.create-post')
+@include('posts.show')
+  
+ 
+
+
 
 
 {{-- <h1> Hi, are you still there?</h1>

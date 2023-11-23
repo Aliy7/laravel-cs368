@@ -3,16 +3,18 @@
 namespace App\Http\Controllers\Post;
 namespace App\Http\Controllers\User;
 
-use Illuminate\Support\Facades\Auth;
+namespace App\Http\Controllers\Comment;
 
 use App\Http\Controllers\Admin\DashboardController;
+use Illuminate\Support\Facades\Auth;
+
 use App\Http\Controllers\ProfileController;
-
-use Illuminate\Support\Facades\Route;
 use App\Models\Post; 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Post\PostController;
-
+use App\Http\Controllers\Comment\CommentController;
 use App\Http\Controllers\User\UserController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +37,17 @@ Route::get('/', function () {
 // )->middleware(['auth', 'verified'])->name('dashboard.index');
 
 
+//Index 
+
+
+
+//comment Controller route
+Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
+
 Route::get('/showLoggedUser', [PostController::class, 'dashboard'])->middleware('auth');
+
+//to get all posts 
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index'); // For general post listing
 
 Route::get('/post/create', [PostController::class, 'create'])->middleware('auth')->name('post.create');
 

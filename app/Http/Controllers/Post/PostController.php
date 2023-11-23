@@ -37,20 +37,32 @@ class PostController extends Controller
     }
     public function show($id ) {
 
-        $post = Post::findOrFail($id);
+        $post = Post::with('comments')->findOrFail($id);
 
         return view('posts.show', compact('post'));
     }
     
-    public function index(){
-        return view('dashboard', compact('post'));
+    public function index()
+    {
+        // Fetch only posts belonging to the authenticated user with their comments
+        $posts = Post::with('comments')->where('user_id', Auth::id())->get();
+
+        return view('dashboard', [
+            'posts' => $posts,
+        ]);
     }
+    
     
     public function showLoggedUser()
 {
     // Fetch only posts belonging to the authenticated user
-    $posts = Post::where('user_id', Auth::id())->get();
-    return redirect()->route('dashboard')->with('success', 'Post created successfully');
+    //$posts = Post::where('user_id', Auth::id())->get();
+    $posts = Post::with('comments.user')->where('user_id', Auth::id())->get();
+    return view('dashboard', compact('posts'));
+        //return redirect()->route('dashboard')->with('success', 'Post created successfully');
+
 }
+
 }
+
 

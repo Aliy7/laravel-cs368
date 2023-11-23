@@ -40,6 +40,8 @@
                         <div class="mb-4">
                             <div class="text-lg font-semibold">{{ $post->title }}</div>
                             <div class="text-gray-600">{{ $post->content }}</div>
+                            <div class="text-gray-600">{{ $post->user->username}}</div>
+
                             <!-- Add more post details as needed -->
                         </div>
                     @endforeach

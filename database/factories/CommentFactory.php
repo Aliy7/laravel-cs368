@@ -35,9 +35,6 @@ class CommentFactory extends Factory
          */
         'post_id' => Post::count() ? Post::all()->random()->id : Post::factory()->create()->id,
             'comment_content' =>fake()->paragraph(4),
-            'feed_back' =>fake()->sentence,
-            'date' =>fake()->date,
-            'time' =>fake()->time,
         ];
     }
 }
