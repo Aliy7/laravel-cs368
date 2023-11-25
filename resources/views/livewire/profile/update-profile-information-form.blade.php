@@ -6,12 +6,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 use Livewire\Volt\Component;
-
+use Livewire\WithFileUploads; // Use this trait for file uploads
 new class extends Component
 {
+    use WithFileUploads;
     public string $name = '';
     public string $email = '';
-
+    public $profile_picture; 
     /**
      * Mount the component.
      */
@@ -43,6 +44,19 @@ new class extends Component
 
         $this->dispatch('profile-updated', name: $user->name);
     }
+  
+    public function updateProfilePicture()
+{
+    $this->validate([
+        'profile_picture' => 'nullable|image|max:2048',
+    ]);
+
+    if ($this->profile_picture) {
+        $imagePath = $this->profile_picture->store('avatars', 'public');
+        Auth::user()->profile()->updateOrCreate([], ['profile_picture' => $imagePath]);
+    }
+
+    $this->dispatchBrowserEvent('profile-picture-updated');}
 
     /**
      * Send an email verification notification to the current user.
@@ -70,13 +84,13 @@ new class extends Component
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
             {{ __('Profile Information') }}
         </h2>
-
         <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
             {{ __("Update your account's profile information and email address.") }}
         </p>
     </header>
 
-    <form wire:submit="updateProfileInformation" class="mt-6 space-y-6">
+    <form wire:submit.prevent="updateProfileInformation" class="mt-6 space-y-6">
+        <!-- Name and Email Fields -->
         <div>
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input wire:model="name" id="name" name="name" type="text" class="mt-1 block w-full" required autofocus autocomplete="name" />
@@ -85,34 +99,27 @@ new class extends Component
 
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input wire:model="email" id="email" name="email" type="email" class="mt-1 block w-full" required autocomplete="username" />
+            <x-text-input wire:model="email" id="email" name="email" type="email" class="mt-1 block w-full" required autocomplete="email" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
-
-            @if (auth()->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! auth()->user()->hasVerifiedEmail())
-                <div>
-                    <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">
-                        {{ __('Your email address is unverified.') }}
-
-                        <button wire:click.prevent="sendVerification" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
-                            {{ __('Click here to re-send the verification email.') }}
-                        </button>
-                    </p>
-
-                    @if (session('status') === 'verification-link-sent')
-                        <p class="mt-2 font-medium text-sm text-green-600 dark:text-green-400">
-                            {{ __('A new verification link has been sent to your email address.') }}
-                        </p>
-                    @endif
-                </div>
-            @endif
         </div>
 
+        <!-- Submit Button for Name and Email -->
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
+        </div>
+    </form>
 
-            <x-action-message class="me-3" on="profile-updated">
-                {{ __('Saved.') }}
-            </x-action-message>
+    <!-- Separate Form for Profile Picture Upload -->
+    <form wire:submit.prevent="updateProfilePicture" class="mt-6 space-y-6">
+        <div>
+            <x-input-label for="profile_picture" :value="__('Profile Picture')" />
+            <input wire:model="profile_picture" id="profile_picture" name="profile_picture" type="file" class="mt-1 block w-full"/>
+            @error('profile_picture') <span class="error text-sm text-red-600">{{ $message }}</span> @enderror
+        </div>
+
+        <!-- Separate Submit Button for Profile Picture -->
+        <div class="flex items-center gap-4">
+            <x-primary-button>{{ __('Upload Picture') }}</x-primary-button>
         </div>
     </form>
 </section>

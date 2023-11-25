@@ -34,7 +34,7 @@ class CommentFactory extends Factory
          * Otherwise create a new post and use its ID.
          */
         'post_id' => Post::count() ? Post::all()->random()->id : Post::factory()->create()->id,
-            'comment_content' =>fake()->paragraph(4),
+            'content' =>fake()->paragraph(4),
         ];
     }
 }

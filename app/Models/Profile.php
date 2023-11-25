@@ -24,4 +24,7 @@ class Profile extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+    public static $rules = [
+        'profile_picture' => 'nullable|image|max:2048', 
+    ];
 }

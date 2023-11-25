@@ -24,13 +24,25 @@
     </x-slot>
 
    {{-- Create New Post Form --}}
-@include('posts.create-post')
-@include('posts.show')
+{{-- //@include('posts.create-post') --}}
+{{-- //@include('posts.show') --}}
   
- 
+{{-- @include('livewire.posts.create-post')
+@include('livewire.posts.show-post') --}}
 
+<!-- Layout and other content -->
+<div>
+    @livewire('post.create-post')
+    @livewire('post.show-post')
 
+</div>
+<!-- Rest of your content -->
 
+{{-- <x-livewire.posts.create-post></x-livewire.posts.create-post> --}}
+
+{{-- <div>
+    @livewire('navigation')
+</div> --}}
 
 {{-- <h1> Hi, are you still there?</h1>
     <div class="py-12">

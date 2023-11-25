@@ -1,4 +1,4 @@
-<section class="px-6 py-8">
+{{-- <section class="px-6 py-8">
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6"> 
   
 <form action="{{ route('post.store') }}" method="POST">
@@ -19,7 +19,6 @@
         </button>
   
 </form>
-</div>
 </section>
 
-
+ --}}
