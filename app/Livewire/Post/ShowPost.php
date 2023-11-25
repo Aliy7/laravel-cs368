@@ -12,7 +12,7 @@ class ShowPost extends Component
 
     protected $userPosts;
     protected $allPosts;
-    protected $listener = ['commentAdded' => '$refresh'];
+    protected $listener = ['commentAdded' => '$getComments'];
     protected $listeners = ['postCreated' => 'refreshPosts'];
 
     public function getPostsProperty()

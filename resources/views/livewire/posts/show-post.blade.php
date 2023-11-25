@@ -22,7 +22,7 @@
                             <div class="text-gray-600 dark:text-gray-300">{{ $post->content }}</div>
                             <div class="text-gray-600 dark:text-gray-300">{{ $post->created_at->format('M d, Y') }}</div>
                                <!-- Include the Livewire post-comment component -->
-                               @livewire('comments.post-comment', ['post' => $post], key($post->id))
+                               @livewire('comment.post-comment', ['post_id' => $post->id])
                         </div>
                     @endforeach
                     {{ $allPosts->links() }}
@@ -58,7 +58,7 @@
                     <div class="text-gray-600 dark:text-gray-300">{{ $post->created_at->format('M d, Y') }}</div>
                       <!-- Include the Livewire post-comment component -->
                       @livewire('comment.post-comment', ['post_id' => $post->id])
-                </div>
+                    </div>
             @endforeach
             {{ $userPosts->links() }} <!-- Pagination links -->
         @else
