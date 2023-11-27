@@ -20,7 +20,11 @@
                             </div>
                             <a href="{{ route('profile.showProfile', $post->user->id) }}" class="text-lg font-semibold">{{ $post->title }}</a>
                             <div class="text-gray-600 dark:text-gray-300">{{ $post->content }}</div>
-                            <div class="text-gray-600 dark:text-gray-300">{{ $post->created_at->format('M d, Y') }}</div>
+                            <div class="text-gray-600 dark:text-gray-300">{{ $post->created_at->diffForHumans()}}</div>
+                            @if($post->image_url)
+                           <img src="{{ Storage::url($post->image_url) }}" alt="Post Image" class="post-image">
+                            @endif
+
                                <!-- Include the Livewire post-comment component -->
                                @livewire('comment.post-comment', ['post_id' => $post->id])
                         </div>
@@ -43,19 +47,37 @@
                     <div class="flex items-center mb-2">
                         @if($post->user->profile && $post->user->profile->avatar_url)
                             <a href="{{ route('profile.showProfile', $post->user->id) }}">
+                                
                                 <img src="{{ $post->user->profile->avatar_url }}" alt="{{ $post->user->username }}'s avatar" class="rounded-full h-8 w-8 mr-2">
                             </a>
+                             <!-- Display the uploaded image if available -->
+                            @if($post->image_url)
+                                <img src="{{ Storage::url($post->image_url) }}" alt="Post Image" style="max-width:300px; height:200px;">
+                            @endif
                         @endif
                         <span class="font-medium mr-2">Posted by:</span>
                         <a href="{{ route('profile.showProfile', $post->user->id) }}" class="text-blue-500 hover:text-blue-700">
                             {{ $post->user->username }}
                         </a>
                     </div>
-                    
+
+
+             <div>
+                <!-- Other content -->
+            
+                <!-- Display the test image -->
+                {{-- <img src="{{ asset('storage/avatars/avatar.png') }}" alt="Test Image" style="max-width:100%; height:auto;"> --}}
+                @if($post->image_url)
+                <img src="{{ Storage::url($post->image_url) }}" alt="Post Image" class="post-image">
+            @endif
+            
+                <!-- More content -->
+            </div>
+            
                     <!-- Post Title and Content -->
                     <a href="{{ route('profile.showProfile', $post->user->id) }}" class="text-lg font-semibold">{{ $post->title }}</a>
                     <div class="text-gray-600 dark:text-gray-300">{{ $post->content }}</div>
-                    <div class="text-gray-600 dark:text-gray-300">{{ $post->created_at->format('M d, Y') }}</div>
+                            <div class="text-gray-600 dark:text-gray-300">{{ $post->created_at->diffForHumans() }}</div>
                       <!-- Include the Livewire post-comment component -->
                       @livewire('comment.post-comment', ['post_id' => $post->id])
                     </div>

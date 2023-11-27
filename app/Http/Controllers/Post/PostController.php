@@ -59,13 +59,21 @@ public function index()
 
     public function showLoggedUser()
 {
-    // Fetch only posts belonging to the authenticated user
-    //$posts = Post::where('user_id', Auth::id())->get();
+    
     $posts = Post::with('comments.user')->where('user_id', Auth::id())->get();
     return view('dashboard', compact('posts'));
-        //return redirect()->route('dashboard')->with('success', 'Post created successfully');
-
 }
+
+     public function deletePost(Request $request){
+
+        $postId = $request->input('postId');
+        $post = Post::find($postId);
+
+        if ($post) {
+            $post->delete();
+        }     
+        return redirect()->route('posts.index')->with('Post is deleted successfuly');
+    }
 
 }
 

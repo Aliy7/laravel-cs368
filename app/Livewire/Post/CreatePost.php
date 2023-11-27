@@ -7,11 +7,16 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Validate;
+use Livewire\Features\SupportFileUploads\WithFileUploads;
 
 class CreatePost extends Component
 {
+
+    use WithFileUploads;
     public $title;
     public $content;
+    public $image; // For the uploaded image
+    public $image_url = null; // URL to be stored in the databas
     
     public $post;
     protected $rules = [
@@ -42,7 +47,8 @@ class CreatePost extends Component
     
         // Continue with validation and post creation
         $this->validate();
-    
+       
+
         // Debug: Check Auth::id()
         logger('Authenticated user ID: ' . Auth::id());
     
@@ -50,8 +56,19 @@ class CreatePost extends Component
         $post->title = $this->title;
         $post->content = $this->content;
         $post->user_id = Auth::id();
+        $post->image_url = $this->image_url; // This might be null if no image was uploaded
         $post->created_at = now();
         $post->updated_at = now();
+
+        // if ($this->image) {
+        //     $imagePath = $this->image->store('profile_pictures', 'public'); 
+        //     $post->image_url = $imagePath;
+        // }
+        if ($this->image) {
+            $fileName = 'post_images/' . uniqid() . '.' . $this->image->getClientOriginalExtension();
+            $this->image->storeAs('public', $fileName); // Stores in 'storage/app/public/post_images'
+            $post->image_url = $fileName; // Store the file name in the database
+        }
         $post->save();
     
         // Check if post is created successfully
@@ -65,10 +82,21 @@ class CreatePost extends Component
 
         }
     }
+        public function uploadImage()
+        {
+            $this->validate([
+                'image' => 'nullable|image|max:1024', // Image validation
+            ]);
+    
+            if ($this->image) {
+                $this->image_url = $this->image->store('profile_pictures', 'public');
+                session()->flash('message', 'Image uploaded successfully');
+            }
+        }
+    
     
 
-   
-    
+
     public function routes()
     {
         return [

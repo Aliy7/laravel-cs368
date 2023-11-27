@@ -19,7 +19,7 @@ class ShowPost extends Component
     {
         return Post::with(['comments.user.profile', 'user.profile'])
                    ->orderBy('created_at', 'desc')
-                   ->paginate(10);
+                   ->paginate(5);
     }
 
     public function getUserPostsProperty()

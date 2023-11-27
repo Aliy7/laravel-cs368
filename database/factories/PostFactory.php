@@ -33,6 +33,7 @@ class PostFactory extends Factory {
             'category_id' => Category::inRandomOrder()->first()->id ?? Category::factory()->create()->id,
             'title' => fake()->sentence,
             'content' => fake()->paragraph(7),
+            'image_url'=>fake()->url,
             
 
         ];

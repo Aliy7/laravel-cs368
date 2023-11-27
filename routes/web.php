@@ -6,18 +6,20 @@ namespace App\Http\Controllers\User;
 namespace App\Http\Controllers\Comment;
 
 namespace App\Livewire;
-use App\Http\Controllers\Admin\DashboardController;
-use Illuminate\Support\Facades\Auth;
-
-
-use App\Http\Controllers\ProfileController;
 use App\Models\Post; 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Post\PostController;
-use App\Http\Controllers\Comment\CommentController;
-use App\Livewire\Comment\PostComment;
-use App\Livewire\Post\CreatePost;
+
+
+use App\Livewire\ImageUpload;
 use App\Livewire\Post\ShowPost;
+use App\Livewire\Post\CreatePost;
+use App\Livewire\Post\PhotoUpload;
+use Illuminate\Support\Facades\Auth;
+use App\Livewire\Comment\PostComment;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Post\PostController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Comment\CommentController;
 
 
 /*
@@ -41,17 +43,7 @@ Route::get('/', function () {
 // )->middleware(['auth', 'verified'])->name('dashboard.index');
 
 
-//Index router get all users posts 
-Route::get('/dashboard', [PostController::class, 'index'])->middleware('auth')->name('dashboard');
-
-// Route::get('/store', CreatePost::class)->middleware('auth')->name('store');
-
-//comment Controller route
-Route::post('/comments', [CommentController::class, 'store'])->name('comments.store')->middleware('auth');
-
-Route::get('/showLoggedUser', [PostController::class, 'dashboard'])->middleware('auth');
-
-
+Route::delete('/post/{id}', PostController::class. '@deletePost')->name('posts.deletePost');
 
 Route::get('/posts/store', [CreatePost::class])->middleware('auth')->name('posts.create');
 //Route::get('/store', [CreatePost::class])->middleware('auth')->name('store');
@@ -60,6 +52,7 @@ Route::get('/posts/render', [CreatePost::class])->middleware('auth')->name('post
 Route::get('/show/mount', [ShowPost::class, 'usersgetPostsProperty'])->middleware('auth')->name('posts.mount');
 Route::get('/shows/posts', [ShowPost::class, 'postsgetPostsProperty'])->name('postsgetPostsProperty');
 
+Route::get('/posts/iamge', [PhotoUpload::class])->middleware('auth')->name('image.uploads');
 //User to profile link 
 
 //new PostComment component route

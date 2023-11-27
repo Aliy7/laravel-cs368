@@ -11,6 +11,7 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                  
                 </div>
             </div>
 
@@ -28,6 +29,7 @@
                 <a href="{{ route('profile.edit') }}" class="text-white hover:text-gray-300">
                     <i class="far fa-id-badge"></i> Profile
                 </a>
+                
                 <form method="POST" action="{{ route('logout') }}" class="ml-4">
                     @csrf
                     <button type="submit" class="text-white hover:text-gray-300">

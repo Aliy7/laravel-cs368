@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->text('title');
             $table->text('content');
+            $table->text('image_url');
             // $table->string('image_url');
             $table->timestamps(); 
             // $table ->timestamp('post_date') -> nullable();

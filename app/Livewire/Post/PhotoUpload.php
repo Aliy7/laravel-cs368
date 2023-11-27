@@ -1,34 +1,41 @@
 <?php
 
 namespace App\Livewire\Post;
-
+use Illuminate\Support\Str;
 use App\Models\Post;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 class PhotoUpload extends Component
 {
+    use WithFileUploads;
+    use WithFileUploads;
 
-    public $image;
-    public $post;
+    public $image; // Use this for the uploaded file
 
     protected $rules = [
-        'photo' => 'required|image|max:2048'
+        'image' => 'required|image|max:2048', // Use 'image' here
     ];
-    
+
     public function render()
     {
-        return view('livewire.photo-upload');
+        return view('livewire.posts.photo-uploads');
     }
 
-    public function mount($id){
-        $this->post = Post::find($id);
-    }
-
-    public function uploads(){
+    public function uploadImage()
+    {
         $this->validate();
-        $image = $this->photo->storeAs();
-        $this->post->featured_image = $image;
-        $this->post->save();
-        session()->flash("message", "Featured image successfully uploaded");
+
+        if ($this->image) {
+            $destinationPath = 'uploads/post_images';
+            $fileName = time() . '_' . $this->image->getClientOriginalName();
+            $this->image->move(public_path($destinationPath), $fileName);
+
+            // Store the path in a session or pass it to the parent component
+            session()->put('image_path', $destinationPath . '/' . $fileName);
+
+            session()->flash("message", "Image uploaded successfully.");
+        } else {
+            session()->flash("error", "No image selected.");
+        }
     }
 }
