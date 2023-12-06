@@ -69,7 +69,7 @@ class CreatePost extends Component
             $this->image->storeAs('public', $fileName); // Stores in 'storage/app/public/post_images'
             $post->image_url = $fileName; // Store the file name in the database
         }
-        $post->save();
+         $post->save();
     
         // Check if post is created successfully
         if ($post) {

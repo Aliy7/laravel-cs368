@@ -52,7 +52,7 @@ Route::get('/posts/render', [CreatePost::class])->middleware('auth')->name('post
 Route::get('/show/mount', [ShowPost::class, 'usersgetPostsProperty'])->middleware('auth')->name('posts.mount');
 Route::get('/shows/posts', [ShowPost::class, 'postsgetPostsProperty'])->name('postsgetPostsProperty');
 
-Route::get('/posts/iamge', [PhotoUpload::class])->middleware('auth')->name('image.uploads');
+Route::get('/posts/image', [PhotoUpload::class])->middleware('auth')->name('image.uploads');
 //User to profile link 
 
 //new PostComment component route
@@ -82,6 +82,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/profile/{id}', [ProfileController::class, 'showProfile'])->name('profile.showProfile');
 
+});
+Route::get('/test-image', function () {
+    return response()->file(storage_path('app/public/post_images/6570e603af5b9.jpg'));
 });
 
 
