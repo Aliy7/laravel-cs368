@@ -8,7 +8,6 @@ use Livewire\WithFileUploads;
 class PhotoUpload extends Component
 {
     use WithFileUploads;
-    use WithFileUploads;
 
     public $image; // Use this for the uploaded file
 

@@ -1,5 +1,4 @@
 
-
 <div>
     <!-- Display Comments -->
     <div class="comments mt-4 bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
@@ -20,12 +19,21 @@
     <!-- Add Comment Form -->
     @auth
     <form wire:submit.prevent="submitComment" class="mt-4">
-        <!-- Textarea with increased width and white background -->
         <textarea wire:model.defer="content" placeholder="Add a comment..."
-                  class="comment-box w-full h-24 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-300"></textarea>
+                  class="w-full h-24 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-300 text-gray-700"></textarea>
+        <x-primary-button type="submit">{{ __('Send Comment') }}</x-primary-button>
+    </form>
+    @if(session()->has('message'))
+    <div class="alert alert-success">
+        {{ session('message') }}
+    </div>
+@endif
 
-            <x-primary-button type="submit">{{ __('Send Comment') }}</x-primary-button>
-        </form>
     @endauth
 </div>
 
+<script>
+    window.addEventListener('comment-added', event => {
+        document.querySelector('textarea').value = ''; // Clear the textarea
+    });
+</script>

@@ -24,13 +24,11 @@
     </x-slot>
 
 
-<!-- Layout and other content -->
 <div>
     @livewire('post.create-post')
     @livewire('post.show-post')
 
 </div>
-<!-- Rest of your content -->
 
        
                  <a href="/" > welcome</a>

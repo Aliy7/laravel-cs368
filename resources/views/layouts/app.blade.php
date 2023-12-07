@@ -40,6 +40,7 @@
     </div>
     @livewireStyles
 
+  
     <!-- Livewire Scripts -->
     @livewireScripts
 </body>

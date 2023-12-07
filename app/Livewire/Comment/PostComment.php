@@ -7,52 +7,48 @@ use Illuminate\Support\Facades\Auth;
 
 class PostComment extends Component
 {
-
     public $post_id;
     public $content;
     public $comments;
+
     public function mount($post_id)
     {
-       $this->getComments();
+        $this->post_id = $post_id;
+        $this->getComments();
     }
 
-    // private function loadComments()
-    // {
-    //     $this->comments = Comment::where('post_id', $this->post_id)->latest()->get();
-    // }
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName, [
+            'content' => 'required',
+        ]);
+    }
 
     public function submitComment()
     {
         $this->validate([
             'content' => 'required',
         ]);
-
-
+    
         $comment = new Comment();
-        $comment->content = $this ->content;
-        $comment->post_id = $this->post_id;        
+        $comment->content = $this->content;
+        $comment->post_id = $this->post_id;
         $comment->user_id = Auth::id();
-        $comment->created_at = now();
-        $comment->updated_at = now();
+        $comment->created_at = now(); // Manually setting created_at
+        $comment->updated_at = now(); // Manually setting updated_at
         $comment->save();
 
-        $this->reset('content');
-        //$this->getComments();
-        // $this->emit('commentAdded', $this->post_id); 
-
-        if ($comment) {
-            session()->flash('success', 'comment is sent successfully.');
-            return redirect()->route('dashboard'); 
-
-        } else {
-            session()->flash('error', 'Cannot send comment.');
-           // return redirect()->back();
-           return redirect()->route('dashboard'); 
-
-        }
+        $this->comments='';
+       $this->reset('content');
+       $this->getComments();
+    
+        // Display a success message when a comment is posted
+        session()->flash('success', 'Comment posted successfully.');
     }
+    
 
-    public function getComments(){
+    public function getComments()
+    {
         $this->comments = Comment::where('post_id', $this->post_id)->latest()->get();
     }
 
@@ -60,4 +56,7 @@ class PostComment extends Component
     {
         return view('livewire.comments.post-comment');
     }
+    protected $listeners = ['refreshComponent' => '$refresh'];
+   
+
 }
