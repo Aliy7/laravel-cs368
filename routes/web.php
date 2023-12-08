@@ -20,7 +20,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Post\PostController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Comment\CommentController;
-
+use App\Livewire\Post\ManagePost;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,7 +43,19 @@ Route::get('/', function () {
 // )->middleware(['auth', 'verified'])->name('dashboard.index');
 
 
-Route::delete('/post/{id}', PostController::class. '@deletePost')->name('posts.deletePost');
+//Route::delete('/post/{id}', PostController::class. '@deletePost')->name('posts.deletePost');
+
+//Route::delete('/post/{id}', ManagePost::class)->middleware('auth')->name('posts.delete');
+Route::get('/delete/{postId}', function ($postId) {
+
+    dd($postId);
+    return view('posts.manage-post', compact($postId)); // Replace 'posts.create' with the actual path to your Blade view
+})->middleware('auth')->name('posts.delete');
+
+// Livewire route
+Route::get('/delete/{postId}', ManagePost::class)
+     ->middleware('auth')
+     ->name('posts.delete');
 
 // Route::get('/posts/store', [CreatePost::class])->middleware('auth')->name('posts.create');
 // //Route::get('/store', [CreatePost::class])->middleware('auth')->name('store');
@@ -64,7 +76,7 @@ Route::get('/posts/show', function () {
 
 
 
-Route::get('/posts/image', [PhotoUpload::class])->middleware('auth')->name('image.uploads');
+//Route::get('/posts/image', [PhotoUpload::class])->middleware('auth')->name('image.uploads');
 //User to profile link 
 
 //new PostComment component route

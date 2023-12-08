@@ -75,6 +75,18 @@ public function index()
         return redirect()->route('posts.index')->with('Post is deleted successfuly');
     }
 
+    public function edit(Post $post)
+    {
+        // Check if the authenticated user owns the post
+        if (auth()->user()->id !== $post->user_id) {
+            return redirect()->route('posts.index')->with('error', 'Unauthorized action.');
+        }
+    
+        return view('posts.edit', compact('post'));
+    }
+    
+    
+
 }
 
 

@@ -13,10 +13,34 @@
                                         <img src="{{ $post->user->profile->avatar_url }}" alt="{{ $post->user->username }}'s avatar" class="rounded-full h-8 w-8 mr-2">
                                     </a>
                                 @endif
-                                <span class="font-medium mr-2">Posted by:</span>
+                                {{-- <span class="font-medium mr-2">Posted by:</span>
+                                @livewire('menu.ellipsis-menu')
+
                                 <a href="{{ route('profile.showProfile', $post->user->id) }}" class="text-blue-500 hover:text-blue-700">
                                     {{ $post->user->username }}
-                                </a>
+                                </a> --}}
+                                <div class="flex justify-between items-center w-full">
+                                    <!-- Left side: "Posted by" and username -->
+                                    <div class="flex items-center grow">
+                                        <span class="font-medium mr-2">Posted by:</span>
+                                        <a href="{{ route('profile.showProfile', $post->user->id) }}" class="text-blue-500 hover:text-blue-700">
+                                            {{ $post->user->username }}
+                                        </a>
+                                    </div>
+                                    <div class="shrink-0">
+                                        {{-- @livewire('menu.ellipsis-menu')
+
+
+                                        @livewire('menu.ellipsis-menu') --}}
+                                        <!-- Including the ManagePost Livewire component -->
+                                        {{-- @livewire('post.manage-post', ['postId' => $post->id]) --}}
+                                        @livewire('post.manage-post', ['postId' => $post->post_id]) 
+                                        
+                                        {{-- @livewire('manage-post', ['postId' => $post->post_id->id]) --}}
+       
+                                    </div>
+                                </div>
+                                
                             </div>
                             <a href="{{ route('profile.showProfile', $post->user->id) }}" class="text-lg font-semibold">{{ $post->title }}</a>
                             <div class="text-gray-600 dark:text-gray-300">{{ $post->content }}</div>
@@ -55,13 +79,23 @@
                                 <img src="{{ Storage::url($post->image_url) }}" alt="Post Image" style="max-width:300px; height:200px;">
                             @endif
                         @endif
-                        <span class="font-medium mr-2">Posted by:</span>
-                        <a href="{{ route('profile.showProfile', $post->user->id) }}" class="text-blue-500 hover:text-blue-700">
-                            {{ $post->user->username }}
-                        </a>
+                        <div class="flex justify-between items-center w-full">
+                            <!-- Left side: "Posted by" and username -->
+                            <div class="flex items-center grow">
+                                <span class="font-medium mr-2">Posted by:</span>
+                                <a href="{{ route('profile.showProfile', $post->user->id) }}" class="text-blue-500 hover:text-blue-700">
+                                    {{ $post->user->username }}
+                                </a>
+                            </div>
+                            <div class="shrink-0">
+                                {{-- @livewire('menu.ellipsis-menu') --}}
+                                @livewire('post.manage-post', ['postId' => $post->id]) 
+
+                                
+                            </div>
+                        </div>
+
                     </div>
-
-
              <div>
                 <!-- Other content -->
             

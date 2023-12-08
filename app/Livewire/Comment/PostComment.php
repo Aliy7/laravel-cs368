@@ -38,7 +38,7 @@ class PostComment extends Component
         $comment->updated_at = now(); // Manually setting updated_at
         $comment->save();
 
-        $this->comments='';
+       $this->comments='';
        $this->reset('content');
        $this->getComments();
        $this->dispatch('commentis created');

@@ -18,4 +18,15 @@ export default {
     },
 
     plugins: [forms],
+    module:exports = {
+        theme: {
+          extend: {
+            colors: {
+              lilac: '#C8A2C8', // Example lilac color; adjust as needed
+              'lilac-light': '#E4CCE6' // Lighter lilac for hover states
+            },
+          },
+        },
+        // ...
+      }
 };

@@ -19,6 +19,7 @@
     <!-- Scripts -->
     @vite(['resources/js/app.js'])
     @livewireStyles
+    
 </head>
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
@@ -40,8 +41,11 @@
         </main>
     </div>
   
+<!-- At the end of your layout's <head> section -->
 
     <!-- Livewire Scripts -->
     @livewireScripts
+    <script src="//unpkg.com/alpinejs" defer></script>
+
 </body>
 </html>

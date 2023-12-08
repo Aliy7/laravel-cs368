@@ -1,0 +1,52 @@
+.ellipsis-button {
+    background: none;
+    border: none;
+    font-size: 24px; /* Adjust the size as needed */
+    cursor: pointer;
+    position: relative; /* This ensures that the absolute positioning of the child is relative to this button */
+    z-index: 2; /* Higher z-index so that the button is above other content */
+}
+
+.ellipsis-menu {
+    position: absolute;
+    right: 0;
+    top: 100%; /* This will position the top of the menu right below the button */
+    background-color: #f1f1f1;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    border-radius: 4px; /* Optional: for rounded corners */
+    min-width: 150px; /* Optional: to ensure that the menu has a uniform width */
+    z-index: 1;
+    display: none; /* Initially hidden */
+}
+
+/* When the 'hidden' class is not present, display the menu */
+.ellipsis-button:focus + .ellipsis-menu,
+.ellipsis-menu:not(.hidden) {
+    display: block;
+}
+
+.ellipsis-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ellipsis-menu li a {
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    color: black;
+    white-space: nowrap; /* Ensures the text does not wrap */
+}
+
+.ellipsis-menu li a:hover {
+    background-color: #ddd;
+}
+
+.hidden {
+    display: none;
+}
+/* If the hidden class is removed, display the menu */
+.ellipsis-menu:not(.hidden) {
+    display: block;
+}
