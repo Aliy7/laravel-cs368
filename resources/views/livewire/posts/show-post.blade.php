@@ -48,7 +48,7 @@
                         @if($post->user->profile && $post->user->profile->avatar_url)
                             <a href="{{ route('profile.showProfile', $post->user->id) }}">
                                 
-                                <img src="{{ $post->user->profile->avatar_url }}" alt="{{ $post->user->username }}'s avatar" class="rounded-full h-8 w-8 mr-2">
+                                {{-- <img src="{{ $post->user->profile->avatar_url }}" alt="{{ $post->user->username }}'s avatar" class="rounded-full h-8 w-8 mr-2"> --}}
                             </a>
                              <!-- Display the uploaded image if available -->
                             @if($post->image_url)
@@ -69,7 +69,6 @@
                 {{-- <img src="{{ asset('storage/avatars/avatar.png') }}" alt="Test Image" style="max-width:100%; height:auto;"> --}}
                 @if($post->image_url)
                 {{-- Debugging line --}}
-                {{ Storage::url($post->image_url) }}
                 
                 <img src="{{ Storage::url($post->image_url) }}" alt="Post Image" class="post-image">
             @else

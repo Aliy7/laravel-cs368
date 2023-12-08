@@ -41,6 +41,7 @@ class PostComment extends Component
         $this->comments='';
        $this->reset('content');
        $this->getComments();
+       $this->dispatch('commentis created');
     
         // Display a success message when a comment is posted
         session()->flash('success', 'Comment posted successfully.');

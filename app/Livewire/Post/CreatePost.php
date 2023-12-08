@@ -19,9 +19,14 @@ class CreatePost extends Component
     public $image_url = null; // URL to be stored in the databas
     
     public $post;
+
+    protected $listeners =[
+        'refresh-me' => 'postCreated'
+    ];
     protected $rules = [
         'title' => 'required|string|min:10',
         'content' => 'required|string|max:200',
+        'image' => 'nullable|image|max:1024', 
     ];
 
     protected $messages = [
@@ -59,28 +64,22 @@ class CreatePost extends Component
         $post->image_url = $this->image_url; // This might be null if no image was uploaded
         $post->created_at = now();
         $post->updated_at = now();
-
-        // if ($this->image) {
-        //     $imagePath = $this->image->store('profile_pictures', 'public'); 
-        //     $post->image_url = $imagePath;
-        // }
+       // logger('Before reset:', ['title' => $this->title, 'content' => $this->content]);
+ 
         if ($this->image) {
             $fileName = 'post_images/' . uniqid() . '.' . $this->image->getClientOriginalExtension();
             $this->image->storeAs('public', $fileName); // Stores in 'storage/app/public/post_images'
             $post->image_url = $fileName; // Store the file name in the database
         }
-         $post->save();
     
-        // Check if post is created successfully
-        if ($post) {
-            session()->flash('success', 'Post created successfully.');
-            return redirect()->route('dashboard');
-        } else {
-            session()->flash('error', 'Failed to create the post.');
-            // return redirect()->back();
-            return redirect()->route('dashboard'); // Using Livewire's redirect
+         $post->save();
+         session()->flash('success', 'Post created successfully.');
+         $this->reset(['title', 'content', 'image']);
 
-        }
+        // logger('After reset:', ['title' => $this->title, 'content' => $this->content]);
+         $this->dispatch('postCreated');
+         $this->image_url = null; 
+      
     }
         public function uploadImage()
         {
@@ -93,7 +92,12 @@ class CreatePost extends Component
                 session()->flash('message', 'Image uploaded successfully');
             }
         }
-    
+    public function resetPost(){
+        $this-> title = '';
+        $this ->content = '';
+        $this->image_url=null;
+        $this->image = null;
+    }
     
 
 

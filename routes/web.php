@@ -45,12 +45,24 @@ Route::get('/', function () {
 
 Route::delete('/post/{id}', PostController::class. '@deletePost')->name('posts.deletePost');
 
-Route::get('/posts/store', [CreatePost::class])->middleware('auth')->name('posts.create');
-//Route::get('/store', [CreatePost::class])->middleware('auth')->name('store');
-Route::get('/posts/render', [CreatePost::class])->middleware('auth')->name('posts.render');
+// Route::get('/posts/store', [CreatePost::class])->middleware('auth')->name('posts.create');
+// //Route::get('/store', [CreatePost::class])->middleware('auth')->name('store');
+// Route::get('/posts/render', [CreatePost::class])->middleware('auth')->name('posts.render');
 
-Route::get('/show/mount', [ShowPost::class, 'usersgetPostsProperty'])->middleware('auth')->name('posts.mount');
-Route::get('/shows/posts', [ShowPost::class, 'postsgetPostsProperty'])->name('postsgetPostsProperty');
+// Route::get('/show/post', [ShowPost::class ])->middleware('auth')->name('posts.mount');
+// Route::get('/shows/posts', [ShowPost::class])->name('postsgetPostsProperty');
+// Full-page Livewire component for creating posts
+// Standard route to a Blade view that includes the CreatePost Livewire component
+Route::get('/posts/create', function () {
+    return view('posts.create-post'); // Replace 'posts.create' with the actual path to your Blade view
+})->middleware('auth')->name('posts.create');
+
+// Standard route to a Blade view that includes the ShowPost Livewire component
+Route::get('/posts/show', function () {
+    return view('posts.show-post'); // Replace 'posts.show' with the actual path to your Blade view
+})->middleware('auth')->name('posts.show');
+
+
 
 Route::get('/posts/image', [PhotoUpload::class])->middleware('auth')->name('image.uploads');
 //User to profile link 
@@ -61,18 +73,18 @@ Route::get('/post/{post_id}/comments', [PostComment::class, 'post.comments'])->m
 
 
 Route::get('/dashboard', function () {
-    // $posts = Post::all(); // Fetch all posts
-    $posts = Post::where('user_id', Auth::id())->get(); // get only registered user
-    return view('dashboard', compact('posts'));
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-
-Route::get('/dashboard', function () {
-    // Fetch all posts along with their comments and the users who made those comments
     $posts = Post::with(['comments.user', 'user'])->get();
 
+    $authenticatedUserId = Auth::id();
+    $posts = $posts->map(function ($post) use ($authenticatedUserId) {
+        $post->isAuthUserPost = ($post->user_id === $authenticatedUserId);
+        return $post;
+    });
+
     return view('dashboard', compact('posts'));
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
