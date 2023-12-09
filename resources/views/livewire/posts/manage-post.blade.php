@@ -10,7 +10,11 @@
         <ul class="text-white-800">
             <div>
                 <!-- Delete button with confirmation -->
-                <button @click="confirmDeletion" class="btn btn-danger">Delete</button>
+              <li>  <button @click="confirmDeletion" class="btn btn-danger">Delete</button></li>
+                {{-- <li><a href="#" wire:click="$dispatch('editPost', {{ $postId }})" class="block px-4 py-2 hover:bg-blue-500">Edit</a></li> --}}
+                {{-- <li><button @click="$dispatch('editPost', { postId: {{ $postId }} })" class="btn btn-danger">Edit</button></li> --}}
+                <button @click="isEditing = true" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">Edit</button>
+
             </div>
             <!-- More options here -->
         </ul>
@@ -40,4 +44,21 @@
             console.log('you cannot delete')
         }
     }
+
+    //hjhjasdfn
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('dropdown', () => ({
+            open: false,
+            confirmDeletion() {
+                if (confirm("Are you sure you want to delete this post?")) {
+                    @this.call('deletePost');
+                }
+            },
+            confirmEdit(postId) {
+                // Dispatch the editPost event with the postId
+                this.$dispatch('editPost', { postId });
+                this.open = false; // Close the dropdown
+            }
+        }));
+    });
 </script>

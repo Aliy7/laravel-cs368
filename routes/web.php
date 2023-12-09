@@ -37,19 +37,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Route::get('/post/{id}', [PostController::class, 'show'])->name('post.show');
 
-// Route::get('/dashboard', [DashboardController::class, 'index']
-// )->middleware(['auth', 'verified'])->name('dashboard.index');
-
-
-//Route::delete('/post/{id}', PostController::class. '@deletePost')->name('posts.deletePost');
-
-//Route::delete('/post/{id}', ManagePost::class)->middleware('auth')->name('posts.delete');
 Route::get('/delete/{postId}', function ($postId) {
 
     dd($postId);
-    return view('posts.manage-post', compact($postId)); // Replace 'posts.create' with the actual path to your Blade view
+    return view('posts.manage-post', compact($postId)); 
 })->middleware('auth')->name('posts.delete');
 
 // Livewire route
@@ -57,21 +49,22 @@ Route::get('/delete/{postId}', ManagePost::class)
      ->middleware('auth')
      ->name('posts.delete');
 
-// Route::get('/posts/store', [CreatePost::class])->middleware('auth')->name('posts.create');
-// //Route::get('/store', [CreatePost::class])->middleware('auth')->name('store');
-// Route::get('/posts/render', [CreatePost::class])->middleware('auth')->name('posts.render');
 
-// Route::get('/show/post', [ShowPost::class ])->middleware('auth')->name('posts.mount');
-// Route::get('/shows/posts', [ShowPost::class])->name('postsgetPostsProperty');
-// Full-page Livewire component for creating posts
-// Standard route to a Blade view that includes the CreatePost Livewire component
+Route::middleware(['auth'])->group(function () {
+        // Edit a post (GET request to show the edit form)
+        Route::get('/posts/{id}/edit', [PostController::class, 'edit'])->name('posts.edit');
+        
+        // Update a post (PUT/PATCH request to update the post)
+        Route::put('/posts/{id}', [PostController::class, 'update'])->name('posts.update');
+    });     
+
 Route::get('/posts/create', function () {
-    return view('posts.create-post'); // Replace 'posts.create' with the actual path to your Blade view
+    return view('posts.create-post'); // 
 })->middleware('auth')->name('posts.create');
 
 // Standard route to a Blade view that includes the ShowPost Livewire component
 Route::get('/posts/show', function () {
-    return view('posts.show-post'); // Replace 'posts.show' with the actual path to your Blade view
+    return view('posts.show-post'); 
 })->middleware('auth')->name('posts.show');
 
 

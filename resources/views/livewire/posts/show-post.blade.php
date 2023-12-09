@@ -33,8 +33,8 @@
 
                                         @livewire('menu.ellipsis-menu') --}}
                                         <!-- Including the ManagePost Livewire component -->
-                                        {{-- @livewire('post.manage-post', ['postId' => $post->id]) --}}
-                                        @livewire('post.manage-post', ['postId' => $post->post_id]) 
+                                        @livewire('post.manage-post', ['postId' => $post->id])
+                                        {{-- @livewire('post.manage-post', ['postId' => $post->post_id])  --}}
                                         
                                         {{-- @livewire('manage-post', ['postId' => $post->post_id->id]) --}}
        
@@ -48,6 +48,8 @@
                             @if($post->image_url)
                            <img src="{{ Storage::url($post->image_url) }}" alt="Post Image" class="post-image">
                             @endif
+
+@livewire('post.post-edit', ['postId' => $post->id], key($post->id))
 
                                <!-- Include the Livewire post-comment component -->
                                @livewire('comment.post-comment', ['post_id' => $post->id])
@@ -88,9 +90,8 @@
                                 </a>
                             </div>
                             <div class="shrink-0">
-                                {{-- @livewire('menu.ellipsis-menu') --}}
-                                @livewire('post.manage-post', ['postId' => $post->id]) 
-
+                                @livewire('post.manage-post', ['postId' => $post->id], key($post->id))
+                        
                                 
                             </div>
                         </div>

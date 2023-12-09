@@ -27,6 +27,11 @@ protected $listeners = [
     'delete' => 'postDeleted'
 ];
 
+
+public function render()
+{
+    return view('livewire.posts.manage-post');
+}
 // Method to toggle the dropdown visibility
 public function toggleDropdown()
 {
@@ -64,9 +69,6 @@ public function deletePost()
     $this->dispatch("postDeleted");
 }
 
-public function render()
-{
-    return view('livewire.posts.manage-post');
-}
+
 
 }

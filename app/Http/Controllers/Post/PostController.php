@@ -85,8 +85,23 @@ public function index()
         return view('posts.edit', compact('post'));
     }
     
+    public function update(Request $request, $id)
+    {
+        $post = Post::findOrFail($id);
+    
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+        ]);
+    
+        $post->update([
+            'title' => $request->input('title'),
+            'content' => $request->input('content'),
+        ]);
+    
+        return redirect()->route('posts.index')->with('message', 'Post updated successfully.');
     
 
 }
 
-
+}
