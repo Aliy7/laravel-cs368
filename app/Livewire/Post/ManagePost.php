@@ -17,10 +17,10 @@ class ManagePost extends Component
     public $postId;
     public $isOpen = false; // For the ellipsis menu
 
-    protected $listeners = [   
-        'delete' => '$postDeleted',
+    // protected $listeners = [   
+    //     'delete' => '$postDeleted',
    
-    ];
+    // ];
     public function openModal($postId)
     {
         $this->postId = $postId;
@@ -74,15 +74,14 @@ class ManagePost extends Component
             session()->flash('message', 'Post deleted successfully.');
     
             // Update the component's state
-            $this->post = Post::all(); // Assuming $this->posts holds the collection of posts
+            $this->post = Post::all(); 
     
-            // Optionally emit an event if other components need to react to the deletion
         } else {
             session()->flash('error', 'Unauthorized action.');
         }
-        $this->dispatch('postDeleted');
+        $this->dispatch('postDeleted') ;
 
-        $this->redirect("/dashboard");
+        // $this->redirect("/dashboard");
     }
     
 

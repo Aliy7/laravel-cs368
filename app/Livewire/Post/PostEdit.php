@@ -2,34 +2,34 @@
 
 namespace App\Livewire\Post;
 
+use App\Models\Post;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Post;
 
 class PostEdit extends Component
 {
-    public $postId;
-    public $title = '';
+    public $post_id;
+    public $title ;
     public $content = '';
     public $isEditing = false;
     public $attemptedEdit = false; 
     protected $listeners = 
     [
-    'post' => '$refresh',
-    'YouCannnot' => '$YouCannotDoIt'];
+    'commentCreated' => '$comment-Created',
+    'postDeleted' => '$postDeleted'];
 
     public function mount($postId)
     {
         logger("Mounting with postId: $postId");
 
-        $this->postId = $postId;
+        $this->post_id = $postId;
         $this->loadPost();
     }
 
     private function loadPost()
     {
 
-        $post = Post::find($this->postId);
+        $post = Post::find($this->post_id);
 
         if (!$post || Auth::id() !== $post->user_id) {
             session()->flash('error', 'Unauthorized action.');
@@ -43,7 +43,7 @@ class PostEdit extends Component
 
     public function edit()
     {
-        $post = Post::find($this->postId);
+        $post = Post::find($this->post_id);
         $this->attemptedEdit = true; // Set to true when edit is attempted
 
         if (!$post || Auth::id() !== $post->user_id) {
@@ -77,20 +77,24 @@ class PostEdit extends Component
             'content' => $this->content,
         ]);
 
-      
-      
-
-        // session()->flash('message', 'Post updated successfully.');
-     
-        $this->dispatch("post");
+        $this->dispatch('post-updated', title:$post->title,
+                            content:$post->content);
         $this->isEditing = false;
 
     }
-
-    public function render()
-    {
-        return view('livewire.posts.post-edit');
+    public function refreshList() {
+        $this->post_id = Post::all(); // Or however you fetch your posts
     }
+    
+
+    public function render(){
+        return view('livewire.posts.post-edit', [
+            'postId' => Post::all() // Fetch all posts
+
+        ]);
+
+    }
+ 
     public function cancelEdit()
 {
     $this->isEditing = false; // Revert editing mode without saving

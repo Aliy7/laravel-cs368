@@ -41,23 +41,27 @@ class PostComment extends Component
        $this->comments='';
        $this->reset('content');
        $this->getComments();
-       $this->dispatch('commentiscreated');
     
         // Display a success message when a comment is posted
-        session()->flash('success', 'Comment posted successfully.');
+        session()->flash('success', 'Comment posted successfully.');      
+         $this->dispatch('commentCreated', content:$comment->content);
+
     }
     
 
     public function getComments()
     {
         $this->comments = Comment::where('post_id', $this->post_id)->latest()->get();
+
+        $this->dispatch('commentCreated');
     }
 
     public function render()
     {
         return view('livewire.comments.post-comment');
     }
-    protected $listeners = ['refreshComponent' => '$commentiscreated'];
+    protected $listeners = ['postCreated' => '$postCreated', 
+                             'post-updated' =>'$postUpdated'];
    
 
 }

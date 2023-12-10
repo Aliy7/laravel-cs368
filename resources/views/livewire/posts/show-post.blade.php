@@ -49,10 +49,11 @@
                            <img src="{{ Storage::url($post->image_url) }}" alt="Post Image" class="post-image">
                             @endif
 
-@livewire('post.post-edit', ['postId' => $post->id], key($post->id))
+                             {{-- @livewire('post.post-edit', ['postId' => $post->id], key('post-edit-'.$post->id)) --}}
+                             @livewire('post.post-edit', ['postId' => $post->id], key('post-edit-'.$post->id))
 
                                <!-- Include the Livewire post-comment component -->
-                               @livewire('comment.post-comment', ['post_id' => $post->id])
+                               @livewire('comment.post-comment', ['post_id' => $post->id], key('post-comment-'.$post->id))
                         </div>
                     @endforeach
                     {{ $allPosts->links() }}
@@ -90,9 +91,8 @@
                                 </a>
                             </div>
                             <div class="shrink-0">
-                                @livewire('post.manage-post', ['postId' => $post->id])
+                                @livewire('post.manage-post', ['postId' => $post->id], key('manage-post-'.$post->id))
                         
-                                
                             </div>
                         </div>
 
@@ -110,6 +110,7 @@
                 No image available.
             @endif
             
+            {{-- @livewire('counter') --}}
                 <!-- More content -->
             </div>
             
@@ -118,7 +119,7 @@
                     <div class="text-gray-600 dark:text-gray-300">{{ $post->content }}</div>
                             <div class="text-gray-600 dark:text-gray-300">{{ $post->created_at->diffForHumans() }}</div>
                       <!-- Include the Livewire post-comment component -->
-                      @livewire('comment.post-comment', ['post_id' => $post->id])
+                      @livewire('comment.post-comment', ['post_id' => $post->id], key('post-comment-'.$post->id))
                     </div>
             @endforeach
             {{ $userPosts->links() }} <!-- Pagination links -->
@@ -130,3 +131,5 @@
 
     </div>
 </div>
+
+

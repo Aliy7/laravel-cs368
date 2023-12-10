@@ -12,17 +12,21 @@ class ShowPost extends Component
 
     protected $userPosts;
     protected $allPosts;
-    protected $listener = ['commentAdded' => '$getComments'];
-    protected $listeners = ['postCreated' => 'refreshPosts'];
+    protected $listener = ['commentCreated' => '$getComments'];
+    protected $listeners = ['postCreated' => '$refreshPosts',
+                            'post-updated' => '$refresh',
+                            'postDeleted' => '$deletePost',
+                  ];
 
-    public function getPostsProperty()
+
+    public function allPosts()
     {
         return Post::with(['comments.user.profile', 'user.profile'])
                    ->orderBy('created_at', 'desc')
                    ->paginate(5);
     }
 
-    public function getUserPostsProperty()
+    public function userPosts()
     {
         return Post::with(['comments.user.profile', 'user.profile'])
                    ->where('user_id', Auth::id())
@@ -33,8 +37,8 @@ class ShowPost extends Component
     public function render()
     {
         return view('livewire.posts.show-post', [
-            'allPosts' => $this->getPostsProperty(),
-            'userPosts' => $this->getUserPostsProperty(),
+            'allPosts' => $this->allPosts(),
+            'userPosts' => $this->userPosts(),
         ]);
     }
     

@@ -5,10 +5,9 @@
         "dev": "vite",
         "build": "vite build",
         "development": "mix",
-    "watch": "mix watch",
-    "prod": "npm run production",
-    "production": "mix --production"
-        
+        "watch": "mix watch",
+        "prod": "npm run production",
+        "production": "mix --production"
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.2",
