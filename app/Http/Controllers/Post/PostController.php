@@ -82,7 +82,7 @@ public function index()
             return redirect()->route('posts.index')->with('error', 'Unauthorized action.');
         }
     
-        return view('posts.edit', compact('post'));
+        return view('posts.post-edit', compact('post'));
     }
     
     public function update(Request $request, $id)

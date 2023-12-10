@@ -41,7 +41,7 @@ class PostComment extends Component
        $this->comments='';
        $this->reset('content');
        $this->getComments();
-       $this->dispatch('commentis created');
+       $this->dispatch('commentiscreated');
     
         // Display a success message when a comment is posted
         session()->flash('success', 'Comment posted successfully.');
@@ -57,7 +57,7 @@ class PostComment extends Component
     {
         return view('livewire.comments.post-comment');
     }
-    protected $listeners = ['refreshComponent' => '$refresh'];
+    protected $listeners = ['refreshComponent' => '$commentiscreated'];
    
 
 }

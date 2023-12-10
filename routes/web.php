@@ -21,6 +21,8 @@ use App\Http\Controllers\Post\PostController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Comment\CommentController;
 use App\Livewire\Post\ManagePost;
+use App\Livewire\Post\PostEdit;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -45,18 +47,17 @@ Route::get('/delete/{postId}', function ($postId) {
 })->middleware('auth')->name('posts.delete');
 
 // Livewire route
-Route::get('/delete/{postId}', ManagePost::class)
+Route::delete('/delete/{postId}', ManagePost::class)
      ->middleware('auth')
      ->name('posts.delete');
 
 
-Route::middleware(['auth'])->group(function () {
-        // Edit a post (GET request to show the edit form)
-        Route::get('/posts/{id}/edit', [PostController::class, 'edit'])->name('posts.edit');
-        
-        // Update a post (PUT/PATCH request to update the post)
-        Route::put('/posts/{id}', [PostController::class, 'update'])->name('posts.update');
-    });     
+     Route::middleware(['auth'])->group(function () {
+        // Other routes
+    
+        // Livewire route for editing a post
+        Route::get('/posts/{id}/edit', PostEdit::class)->name('posts.edit');
+    });   
 
 Route::get('/posts/create', function () {
     return view('posts.create-post'); // 

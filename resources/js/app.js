@@ -1,15 +1,15 @@
 import { document } from 'postcss';
-import './bootstrap';
+// import './bootstrap';
 import '../css/app.css';
 
-import Alpine from 'alpinejs';
+// import Alpine from 'alpinejs';
 
 
 
-window.Alpine = Alpine;
-Alpine.plugin(focus);
+// window.Alpine = Alpine;
+// Alpine.plugin(focus);
 
-Alpine.start();
+// Alpine.start();
 document.addEventListeners('DomContentLoaded', () =>{
   console.log("dom loaded")
 });

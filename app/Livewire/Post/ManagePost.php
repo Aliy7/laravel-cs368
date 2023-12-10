@@ -11,64 +11,80 @@ class ManagePost extends Component
 {
 
 
- public $post;
-public function confirmDeletion()
-{
-    if ($this->postId) {
-        $this->dispatch('confirmDeletion', $this->postId);
-    }
-}
-public $postId;
-public $isOpen = false; // For the ellipsis menu
+    public $post;
 
-protected $listeners = [
-    'requestDeletion' => 'confirmDeletion',
-    'closeDropdown' => 'closeDropdown',
-    'delete' => 'postDeleted'
-];
+    public $showModal = false;
+    public $postId;
+    public $isOpen = false; // For the ellipsis menu
 
-
-public function render()
-{
-    return view('livewire.posts.manage-post');
-}
-// Method to toggle the dropdown visibility
-public function toggleDropdown()
-{
-    $this->isOpen = !$this->isOpen;
-    if ($this->isOpen) {
-        $this->dispatch('dropdown-open');
-    }
-}
-
-// Method to close the dropdown
-public function closeDropdown()
-{
-    $this->isOpen = false;
-}
-public function deletePost()
-{
-
-    $post = Post::find($this->postId);
-    Log::info("Confirm Deletion called for post ID: " . $this->postId);
-
-    if (!$post) {
-        session()->flash('error', 'Post not found.');
-        return;
+    protected $listeners = [   
+        'delete' => '$postDeleted',
+   
+    ];
+    public function openModal($postId)
+    {
+        $this->postId = $postId;
+        $this->showModal = true;
     }
 
-    if (Auth()->check() && $post->user_id == Auth()->id()) {
-        $post->delete();
-        session()->flash('message', 'Post deleted successfully.');
-        $this->dispatch('postDeleted'); // Optional: Emit an event after deletion
-    } else {
-        session()->flash('error', 'Unauthorized action.');
+    public function closeModal()
+    {
+        $this->showModal = false;
     }
-    $this->post = Post::all();
+    public function confirmDeletion()
+    {
+        if ($this->postId) {
+            $this->deletePost();
+            $this->dispatch('confirmDeletion', $this->postId);
+            $this->closeModal();
 
-    $this->dispatch("postDeleted");
-}
+        }
+    }
+    public function render()
+    {
+        return view('livewire.posts.manage-post');
+    }
+    // Method to toggle the dropdown visibility
+    public function toggleDropdown()
+    {
+        $this->isOpen = !$this->isOpen;
+        if ($this->isOpen) {
+            $this->dispatch('dropdown-open');
+        }
+    }
 
+    // Method to close the dropdown
+    public function closeDropdown()
+    {
+        $this->isOpen = false;
+    }
+    public function deletePost()
+    {
+        $post = Post::find($this->postId);
+        Log::info("Confirm Deletion called for post ID: " . $this->postId);
+    
+        if (!$post) {
+            session()->flash('error', 'Post not found.');
+            return;
+        }
+    
+        if (Auth::check() && $post->user_id == Auth::id()) {
+            $post->delete();
 
+            session()->flash('message', 'Post deleted successfully.');
+    
+            // Update the component's state
+            $this->post = Post::all(); // Assuming $this->posts holds the collection of posts
+    
+            // Optionally emit an event if other components need to react to the deletion
+        } else {
+            session()->flash('error', 'Unauthorized action.');
+        }
+        $this->dispatch('postDeleted');
 
+        $this->redirect("/dashboard");
+    }
+    
+
+    
 }

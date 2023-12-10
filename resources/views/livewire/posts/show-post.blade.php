@@ -90,7 +90,7 @@
                                 </a>
                             </div>
                             <div class="shrink-0">
-                                @livewire('post.manage-post', ['postId' => $post->id], key($post->id))
+                                @livewire('post.manage-post', ['postId' => $post->id])
                         
                                 
                             </div>
