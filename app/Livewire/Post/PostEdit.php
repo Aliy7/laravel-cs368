@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PostEdit extends Component
 {
-    public $post_id;
+      public $postId;
     public $title ;
     public $content = '';
     public $isEditing = false;
@@ -22,14 +22,14 @@ class PostEdit extends Component
     {
         logger("Mounting with postId: $postId");
 
-        $this->post_id = $postId;
+        $this->postId = $postId;
         $this->loadPost();
     }
 
     private function loadPost()
     {
 
-        $post = Post::find($this->post_id);
+        $post = Post::find($this->postId);
 
         if (!$post || Auth::id() !== $post->user_id) {
             session()->flash('error', 'Unauthorized action.');
@@ -43,7 +43,7 @@ class PostEdit extends Component
 
     public function edit()
     {
-        $post = Post::find($this->post_id);
+        $post = Post::find($this->postId);
         $this->attemptedEdit = true; // Set to true when edit is attempted
 
         if (!$post || Auth::id() !== $post->user_id) {
@@ -77,13 +77,12 @@ class PostEdit extends Component
             'content' => $this->content,
         ]);
 
-        $this->dispatch('post-updated', title:$post->title,
-                            content:$post->content);
+        $this->dispatch('post-updated', $this->postId);
         $this->isEditing = false;
 
     }
     public function refreshList() {
-        $this->post_id = Post::all(); // Or however you fetch your posts
+        $this->postId = Post::all(); // Or however you fetch your posts
     }
     
 
@@ -99,4 +98,13 @@ class PostEdit extends Component
 {
     $this->isEditing = false; // Revert editing mode without saving
 }
+public function refreshPostData() {
+    $post = Post::find($this->postId);
+    if ($post) {
+      
+        $this->title = $post->title;
+        $this->content = $post->content;
+    }
+}
+
 }

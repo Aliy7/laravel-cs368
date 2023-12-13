@@ -9,9 +9,12 @@ namespace App\Livewire;
 use App\Models\Post; 
 
 
+use App\Livewire\LikeUnlike;
 use App\Livewire\ImageUpload;
+use App\Livewire\Post\PostEdit;
 use App\Livewire\Post\ShowPost;
 use App\Livewire\Post\CreatePost;
+use App\Livewire\Post\ManagePost;
 use App\Livewire\Post\PhotoUpload;
 use Illuminate\Support\Facades\Auth;
 use App\Livewire\Comment\PostComment;
@@ -20,8 +23,6 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Post\PostController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Comment\CommentController;
-use App\Livewire\Post\ManagePost;
-use App\Livewire\Post\PostEdit;
 
 
 /*
@@ -90,6 +91,10 @@ Route::get('/dashboard', function () {
     return view('dashboard', compact('posts'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
+
+
+Route::get('/like-unlike/{type}/{id}', LikeUnlike::class)->name('like-unlike');
 
 
 Route::middleware('auth')->group(function () {

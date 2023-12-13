@@ -22,9 +22,7 @@ class Post extends Model
         return $this->belongsTo(Category::class);
     }
    
-    public function likes(){
-        return $this -> hasMany(Like::class);
-    }
+   
     public function comments(){
         return $this -> hasMany(Comment :: class);
     }
@@ -35,5 +33,8 @@ class Post extends Model
             $post->comments()->delete();
         });
     }
-
+    public function likes()
+    {
+        return $this->morphMany(Like::class, 'likable');
+    }
 }

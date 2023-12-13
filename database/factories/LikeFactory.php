@@ -1,8 +1,9 @@
 <?php
 
 namespace Database\Factories;
-use App\Models\User;
 use App\Models\Post;
+use App\Models\User;
+use App\Models\Comment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,18 +19,15 @@ class LikeFactory extends Factory
     public function definition(): array
     {
         
-            return [
-           
-                /**
-                 * This line gets a random user ID from the database. 
-                 * If there are no users, it creates a new user 
-                 * and gets its ID. 
-                 * */
-                'user_id' => User::inRandomOrder()->first()->id ?? User::factory()->create()->id,
-                'post_id' => Post::inRandomOrder()->first()->id ?? Post::factory()->create()->id,
-                /**Generates either 1 or -1  - One for like and -1 for unlike */
-                'value' => fake()->randomElement([1, -1]), 
-            
+        $likableTypes = [Post::class, Comment::class];
+        $likableType = fake()->randomElement($likableTypes);
+        $likable = $likableType::inRandomOrder()->first() ?? $likableType::factory()->create();
+
+        return [
+            'user_id' => User::inRandomOrder()->first()->id ?? User::factory()->create()->id,
+            'likable_id' => $likable->id,
+            'likable_type' => get_class($likable),
+            'value' => fake()->randomElement([1, -1]), // 1 for like, -1 for dislike
         ];
     }
 }

@@ -26,7 +26,6 @@
 <div>
     @livewire('post.create-post')
     @livewire('post.show-post')
-
 </div>
                  <a href="/" > welcome</a>
 

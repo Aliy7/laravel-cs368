@@ -11,6 +11,10 @@
                         {{ $comment->user->username }}
                     </a>
                 </div>
+                @livewire('like-Unlike', ['type' => 'comment', 'modelId' => $post_id])
+                {{-- @livewire('likes', ['type' => 'comment', 'modelId' => $comment->id]) --}}
+
+
             </div>
         @empty
             <p>No comments yet.</p>
