@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use Spatie\Permission\Traits\HasRoles;
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -12,6 +13,7 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -75,10 +77,7 @@ class User extends Authenticatable
     /**
      * User's relationship with Role.
      */
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class);
-    }
+   
 
     /**
      * Check if user has a specific role.
@@ -86,15 +85,15 @@ class User extends Authenticatable
      * @param array|string $roles
      * @return bool
      */
-    public function hasRole($roles)
-    {
-        foreach ($roles as $role) {
-            if ($this->roles->contains('name', $role)) {
-                return true;
-            }
-        }
-        return false;
-    }
+    // public function hasRole($roles)
+    // {
+    //     foreach ($roles as $role) {
+    //         if ($this->roles->contains('name', $role)) {
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
 
     public function showProfile($id)
 {

@@ -17,10 +17,6 @@ class ManagePost extends Component
     public $postId;
     public $isOpen = false; // For the ellipsis menu
 
-    // protected $listeners = [   
-    //     'delete' => '$postDeleted',
-   
-    // ];
     public function openModal($postId)
     {
         $this->postId = $postId;
@@ -37,11 +33,12 @@ class ManagePost extends Component
             $this->deletePost();
             $this->dispatch('confirmDeletion', $this->postId);
             $this->closeModal();
-
         }
     }
     public function render()
     {
+        $this->post = Post::find($this->postId);
+
         return view('livewire.posts.manage-post');
     }
     // Method to toggle the dropdown visibility
@@ -58,32 +55,50 @@ class ManagePost extends Component
     {
         $this->isOpen = false;
     }
+    // public function deletePost()
+    // {
+    //     $post = Post::find($this->postId);
+    //     Log::info("Confirm Deletion called for post ID: " . $this->postId);
+
+    //     if (!$post) {
+    //         session()->flash('error', 'Post not found.');
+    //         return;
+    //     }
+
+    //     if (Auth::check() && $post->user_id == Auth::id()) {
+    //         $post->delete();
+
+    //         session()->flash('message', 'Post deleted successfully.');
+
+    //         // Update the component's state
+    //         $this->post = Post::all(); 
+
+    //     } else {
+    //         session()->flash('error', 'Unauthorized action.');
+    //     }
+    //     $this->dispatch('postDeleted') ;
+
+    //     // $this->redirect("/dashboard");
+    // }
     public function deletePost()
     {
         $post = Post::find($this->postId);
-        Log::info("Confirm Deletion called for post ID: " . $this->postId);
+        $user = Auth::user(); // Retrieve the authenticated user
     
         if (!$post) {
             session()->flash('error', 'Post not found.');
             return;
         }
     
-        if (Auth::check() && $post->user_id == Auth::id()) {
+        // Admin can delete any post or user can delete their own post
+        if ($user && ($user->hasRole('admin') || $post->user_id == $user->id)) {
             $post->delete();
-
             session()->flash('message', 'Post deleted successfully.');
-    
-            // Update the component's state
-            $this->post = Post::all(); 
-    
-        } else {
-            session()->flash('error', 'Unauthorized action.');
+            $this->dispatch('postDeleted'); // Refresh or update the posts list
+            return;
         }
-        $this->dispatch('postDeleted') ;
-
-        // $this->redirect("/dashboard");
-    }
     
-
+        session()->flash('error', 'Unauthorized action.');
+    }
     
 }

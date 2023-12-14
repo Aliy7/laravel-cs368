@@ -171,6 +171,9 @@ return [
         App\Providers\VoltServiceProvider::class,
         Livewire\LivewireServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
+
+
     ])->toArray(),
 
     /*

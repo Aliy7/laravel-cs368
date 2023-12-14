@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder{
         $this->call(CategorySeeder::class);
         $this->call(LikeSeeder::class);
         $this->call(ProfileSeeder::class);
+        $this->call(RolesAndPermissionsSeeder::class);
        
     }
 }

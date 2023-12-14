@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PostEdit extends Component
 {
-      public $postId;
+    public $postId;
     public $title ;
     public $content = '';
     public $isEditing = false;
