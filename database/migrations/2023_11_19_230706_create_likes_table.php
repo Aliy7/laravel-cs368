@@ -16,11 +16,10 @@ return new class extends Migration
             $table->string('type')->default('likes'); 
             $table->morphs('likable');
             $table->integer('value');
-            $table -> unsignedBigInteger('user_id');
             $table->timestamps();
 
-           $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-    
+
+            $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

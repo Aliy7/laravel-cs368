@@ -15,11 +15,9 @@ return new class extends Migration
             $table->id();
             $table -> text('content');
             $table->timestamps();
-            $table->bigInteger('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table -> bigInteger('post_id') -> unsigned();
-            $table -> foreign('post_id') -> references('id') ->on('posts')->onDelete('cascade') -> onUpdate('cascade');;
-      
+
+            $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('post_id')->constrained()->onUpdate('cascade')->onDelete('cascade');      
         });
     }
 

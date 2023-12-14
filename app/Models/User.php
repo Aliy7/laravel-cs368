@@ -95,9 +95,14 @@ class User extends Authenticatable
     //     return false;
     // }
 
-    public function showProfile($id)
+//     public function showProfile($id)
+// {
+//     $user = User::with('posts')->findOrFail($id); // Assuming you have a posts relationship in your User model
+//     return view('users.profile', compact('user'));
+// }
+public function notifications()
 {
-    $user = User::with('posts')->findOrFail($id); // Assuming you have a posts relationship in your User model
-    return view('users.profile', compact('user'));
+    return $this->hasMany(Notification::class, 'user_id');
 }
+
 }

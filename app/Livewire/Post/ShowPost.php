@@ -16,6 +16,7 @@ class ShowPost extends Component
     protected $listeners = ['postCreated' => '$refreshPosts',
                             'post-updated' => '$refresh',
                             'postDeleted' => '$deletePost',
+                            'postEdited' => '$editPost',
                   ];
 
 

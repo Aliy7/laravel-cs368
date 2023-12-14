@@ -13,7 +13,7 @@ class PostSeeder extends Seeder
      */
     public function run(): void
     {
-        $post_size =20;
+        $post_size =40;
         Post::factory()->count($post_size)->create();
         
     }

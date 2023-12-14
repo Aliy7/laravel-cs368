@@ -11,20 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('profiles', function (Blueprint $table) {
+        Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->text('bio')->nullable();
-            $table->string('name')->nullable();
-            $table->string('profile_picture')->nullable();
-            $table->string('phone_number')->nullable();
-            $table->date('date_of_birth')->nullable();
-            $table->string('website_url')->nullable();
-            $table->string('location')->nullable();
+            $table->string('type'); 
+        
+            $table->boolean('is_read')->default(false);
             $table->timestamps();
 
-            
             $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-         
+            $table->foreignId('post_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+
         });
     }
 
@@ -33,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('profiles');
+        Schema::dropIfExists('notifications');
     }
 };

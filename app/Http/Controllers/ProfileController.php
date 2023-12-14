@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Http\RedirectResponse;
+use App\Models\Post;
+use App\Models\User;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
+use App\Http\Requests\ProfileUpdateRequest;
 use App\Notifications\ProfileUpdatedNotification;
-use App\Models\User;
 
 class ProfileController extends Controller
 {
@@ -87,7 +88,18 @@ class ProfileController extends Controller
         return back()->with('success', 'Profile picture updated successfully.');
     }
     
-    // ...
+    //should be deleed later
+    public function showPost()
+    {
+        // Retrieve all posts by the currently logged-in user
+        $userPosts = Post::with('comments')->where('user_id', Auth::id())->get();
+    
+        // Retrieve other posts from the database
+        $otherPosts = Post::with('comments')->where('user_id', '!=', Auth::id())->get();
+    
+        // Return the view with posts data
+        return view('livewire.profile.show-posts', compact('userPosts', 'otherPosts'));
+    }
 
 
     /**

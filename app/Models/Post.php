@@ -37,4 +37,9 @@ class Post extends Model
     {
         return $this->morphMany(Like::class, 'likable');
     }
+    public function notifications()
+{
+    return $this->hasMany(Notification::class, 'post_id');
+}
+
 }

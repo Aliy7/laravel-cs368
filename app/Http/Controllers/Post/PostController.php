@@ -44,19 +44,30 @@ class PostController extends Controller
   
     
 
-public function index()
-{
-    // Fetch all posts and the related user and profile data
-    $allPosts = Post::with(['comments.user.profile', 'user.profile'])->get();
+// public function index()
+// {
+//     // Fetch all posts and the related user and profile data
+//     $allPosts = Post::with(['comments.user.profile', 'user.profile'])->get();
     
-    // Fetch posts belonging to the authenticated user with their comments
-    $userPosts = Post::with(['comments.user.profile', 'user.profile'])
-                     ->where('user_id', Auth::id())
-                     ->get();
+//     // Fetch posts belonging to the authenticated user with their comments
+//     $userPosts = Post::with(['comments.user.profile', 'user.profile'])
+//                      ->where('user_id', Auth::id())
+//                      ->get();
 
-    return view('dashboard', compact('allPosts', 'userPosts'));
+//     return view('dashboard', compact('allPosts', 'userPosts'));
+// }
+
+public function showPost()
+{
+    // Retrieve all posts by the currently logged-in user
+    $userPosts = Post::with('comments')->where('user_id', Auth::id())->get();
+
+    // Retrieve other posts from the database
+    $otherPosts = Post::with('comments')->where('user_id', '!=', Auth::id())->get();
+
+    // Return the view with posts data
+    return view('livewire.profile.show-posts', compact('userPosts', 'otherPosts'));
 }
-
     public function showLoggedUser()
 {
     

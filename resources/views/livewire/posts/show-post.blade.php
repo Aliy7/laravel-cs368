@@ -24,7 +24,7 @@
                                     <!-- Left side: "Posted by" and username -->
                                     <div class="flex items-center grow">
                                         <span class="font-medium mr-2">Posted by:</span>
-                                        <a href="{{ route('profile.showProfile', $post->user->id) }}" class="text-blue-500 hover:text-blue-700">
+                                        <a href="{{ route('user.posts', $post->user->id) }}" class="text-blue-500 hover:text-blue-700">
                                             {{ $post->user->username }}
                                         </a>
                                     </div>

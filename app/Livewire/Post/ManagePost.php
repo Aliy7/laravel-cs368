@@ -55,31 +55,7 @@ class ManagePost extends Component
     {
         $this->isOpen = false;
     }
-    // public function deletePost()
-    // {
-    //     $post = Post::find($this->postId);
-    //     Log::info("Confirm Deletion called for post ID: " . $this->postId);
 
-    //     if (!$post) {
-    //         session()->flash('error', 'Post not found.');
-    //         return;
-    //     }
-
-    //     if (Auth::check() && $post->user_id == Auth::id()) {
-    //         $post->delete();
-
-    //         session()->flash('message', 'Post deleted successfully.');
-
-    //         // Update the component's state
-    //         $this->post = Post::all(); 
-
-    //     } else {
-    //         session()->flash('error', 'Unauthorized action.');
-    //     }
-    //     $this->dispatch('postDeleted') ;
-
-    //     // $this->redirect("/dashboard");
-    // }
     public function deletePost()
     {
         $post = Post::find($this->postId);

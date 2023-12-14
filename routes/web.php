@@ -6,9 +6,10 @@ namespace App\Http\Controllers\User;
 namespace App\Http\Controllers\Comment;
 
 namespace App\Livewire;
+use App\Models\User;
+
+
 use App\Models\Post; 
-
-
 use App\Livewire\LikeUnlike;
 use App\Livewire\ImageUpload;
 use App\Livewire\Post\PostEdit;
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Livewire\Comment\PostComment;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Livewire\Display\PostCommentDisplay;
 use App\Http\Controllers\Post\PostController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Comment\CommentController;
@@ -71,10 +73,6 @@ Route::get('/posts/show', function () {
 
 
 
-//Route::get('/posts/image', [PhotoUpload::class])->middleware('auth')->name('image.uploads');
-//User to profile link 
-
-//new PostComment component route
 
 Route::get('/post/{post_id}/comments', [PostComment::class, 'post.comments'])->middleware('auth')->name('post-comment.postcomment');
 
@@ -104,6 +102,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/profile/{id}', [ProfileController::class, 'showProfile'])->name('profile.showProfile');
+    // Route::get('/user/{id}', [ProfileController::class, 'showPost'])->name('show.posts');
+    Route::get('/user/{userId}', PostCommentDisplay::class)->name('user.posts');
+    Route::get('/user/{userId}/posts', PostCommentDisplay::class)->name('user.posts');
+
+
 
 });
 Route::get('/test-image', function () {

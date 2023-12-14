@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Hash;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -38,12 +39,12 @@ class RolesAndPermissionsSeeder extends Seeder
       
 
         $user = new User();
-        $user->id = 21;
+        $user->id = 123;
         $user->username = 'Admin';
         $user->first_name='Hassan';
         $user->last_name='Bin Ali';
         $user->email = 'hass@swansea.ac.uk';
-        $user->password = bcrypt('password'); // Replace with the actual password
+        $user->password = Hash::make('Swansea123@!'); 
         $user->save();
 
         

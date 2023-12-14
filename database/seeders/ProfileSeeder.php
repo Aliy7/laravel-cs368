@@ -13,7 +13,7 @@ class ProfileSeeder extends Seeder
      */
     public function run(): void
     {
-        $profile_faker_size=20;
+        $profile_faker_size=35;
         Profile::factory()->count($profile_faker_size)->create();
     }
 }

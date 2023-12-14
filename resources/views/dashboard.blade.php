@@ -26,6 +26,8 @@
 <div>
     @livewire('post.create-post')
     @livewire('post.show-post')
+    {{-- @livewire('display.post-comment-display') --}}
+
 </div>
                  <a href="/" > welcome</a>
 
