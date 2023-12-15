@@ -47,7 +47,6 @@ use WithPagination;
 
 public $userId;
 public $postPerPage = 4;
-public $layout = 'layouts.app'; 
 
 public function mount($userId = null)
 {
@@ -62,7 +61,7 @@ public function render()
     // Fetch other posts that are not by the user
     $otherPosts = $this->displayOtherPosts();
 
-    return view('livewire.display.show-posts', compact('userPosts', 'otherPosts'))
+    return view('livewire.display.post-link', compact('userPosts', 'otherPosts'))
     ->layout('layouts.app'); // Ensure this path is correct
 
 }

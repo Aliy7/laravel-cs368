@@ -59,8 +59,8 @@
                 <!-- Show Delete button for post owner or admin -->
                 @if($post && auth()->check() && (auth()->user()->hasRole('admin') || $post->user_id == auth()->id()))
                 <li>
-                        {{-- <button wire:click="confirmDeletion" class="btn btn-danger">Delete</button> --}}
-                        {{-- <li><button onclick="confirmDeletion()" class="btn btn-danger">Delete</button></li> --}}
+                        {{-- <button wire:click="confirmDeletion" class="btn btn-danger">Delete</button> 
+                        <li><button onclick="confirmDeletion()" class="btn btn-danger">Delete</button></li> --}}
 
                        <li><button onclick="confirmDeletion()" wire:click="deletePost" class="btn btn-danger">Delete</button> </li>
 

@@ -10,14 +10,17 @@ use App\Models\User;
 
 
 use App\Models\Post; 
+use App\Mail\TestEmail;
 use App\Livewire\LikeUnlike;
 use App\Livewire\ImageUpload;
+use App\Livewire\Notifications;
 use App\Livewire\Post\PostEdit;
 use App\Livewire\Post\ShowPost;
 use App\Livewire\Post\CreatePost;
 use App\Livewire\Post\ManagePost;
 use App\Livewire\Post\PhotoUpload;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use App\Livewire\Comment\PostComment;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
@@ -105,6 +108,7 @@ Route::middleware('auth')->group(function () {
     // Route::get('/user/{id}', [ProfileController::class, 'showPost'])->name('show.posts');
     Route::get('/user/{userId}', PostCommentDisplay::class)->name('user.posts');
     Route::get('/user/{userId}/posts', PostCommentDisplay::class)->name('user.posts');
+    Route::get('/notifications', Notifications::class)->name('notifications');
 
 
 
@@ -114,14 +118,15 @@ Route::get('/test-image', function () {
 });
 
 
-// Route::prefix('admin')->group(function(){
+//Just trying notification sending
+;
 
-//     Route::get('/dashboard', [DashboardController::class, 'index']);
-// });
+Route::get('/send-test-email', function () {
 
-//show post on the screen
-
-// Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show');
+    $name = "You little slut";
+    Mail::to('recipient@muktar.com')->send(new TestEmail($name));
+  
+});
 
 
 require __DIR__.'/auth.php';

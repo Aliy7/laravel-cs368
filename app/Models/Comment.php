@@ -31,4 +31,7 @@ class Comment extends Model
     {
         return $this->morphMany(Like::class, 'likable');
     }
+    public function notification(){
+        return $this->notification();
+    }
 }

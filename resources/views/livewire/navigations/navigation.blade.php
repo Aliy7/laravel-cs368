@@ -27,6 +27,12 @@
                 @endguest
 
                 @auth
+
+                <!--A link for notification-->
+<a href="{{ route('notifications') }}" class="text-white hover:text-gray-300 mr-8 px-3 py-2 rounded-md text-sm font-medium bg-blue-500 hover:bg-blue-600">
+    <i class="fas fa-bell"></i> Notifications
+</a>
+
     <!-- Posts Link -->
     <a href="{{ route('user.posts', ['userId' => auth()->id()]) }}" class="text-white hover:text-gray-300 mr-8 px-3 py-2 rounded-md text-sm font-medium bg-blue-500 hover:bg-blue-600">
         <i class="far fa-id-badge"></i> Posts
