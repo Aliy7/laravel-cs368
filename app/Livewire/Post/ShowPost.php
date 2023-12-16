@@ -17,6 +17,7 @@ class ShowPost extends Component
                             'post-updated' => '$refresh',
                             'postDeleted' => '$deletePost',
                             'postEdited' => '$editPost',
+                            'qouteGenerated' => '$qouteGenerated'
                   ];
 
 

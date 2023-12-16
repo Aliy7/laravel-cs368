@@ -21,7 +21,8 @@ class CreatePost extends Component
     public $post;
 
     protected $listeners =[
-        'commentCreated' => '$commentCreated'
+        'commentCreated' => '$commentCreated',
+        'qouteGenerated' => '$qouteGenerated'
     ];
     protected $rules = [
         'title' => 'required|string|min:10',

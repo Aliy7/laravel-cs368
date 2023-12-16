@@ -11,9 +11,9 @@ use App\Models\User;
 
 use App\Models\Post; 
 use App\Mail\TestEmail;
+use App\Livewire\Quote\ShowQuote;
 use App\Livewire\LikeUnlike;
 use App\Livewire\ImageUpload;
-use App\Livewire\Notifications;
 use App\Livewire\Post\PostEdit;
 use App\Livewire\Post\ShowPost;
 use App\Livewire\Post\CreatePost;
@@ -25,7 +25,9 @@ use App\Livewire\Comment\PostComment;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Livewire\Display\PostCommentDisplay;
+use App\Livewire\Notification\Notifications;
 use App\Http\Controllers\Post\PostController;
+use App\Http\Controllers\QuoteGeneratorController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Comment\CommentController;
 
@@ -113,20 +115,10 @@ Route::middleware('auth')->group(function () {
 
 
 });
-Route::get('/test-image', function () {
-    return response()->file(storage_path('app/public/post_images/6570e603af5b9.jpg'));
-});
 
 
-//Just trying notification sending
-;
-
-Route::get('/send-test-email', function () {
-
-    $name = "You little slut";
-    Mail::to('recipient@muktar.com')->send(new TestEmail($name));
-  
-});
+// Route::get('/quotes', [QuoteGeneratorController::class, 'showQuotes'])->name('quotes.show');
+Route::get('/quotes', ShowQuote::class)->name('show-quote');
 
 
 require __DIR__.'/auth.php';

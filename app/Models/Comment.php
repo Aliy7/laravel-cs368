@@ -10,28 +10,31 @@ class Comment extends Model
 {
     use HasFactory;
 
-    protected $fillable=[
+    protected $fillable = [
         'comment_content',
-       
-      
+
+
     ];
 
-    protected $guard=[
+    protected $guard = [
         'user_id',
         'post_id',
     ];
 
-    public function user(){
-        return $this -> belongsTo(User::class);
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
-    public function post(){
-        return $this -> belongsTo(Post::class);
+    public function post()
+    {
+        return $this->belongsTo(Post::class);
     }
     public function likes()
     {
         return $this->morphMany(Like::class, 'likable');
     }
-    public function notification(){
-        return $this->notification();
+    public function notification()
+    {
+        return $this->hasOne(Notification::class, 'comment_id');
     }
 }

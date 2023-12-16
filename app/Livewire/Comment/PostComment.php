@@ -54,10 +54,10 @@ class PostComment extends Component
 
       
         $postOwner = Post::findOrFail($this->post_id)->user;
-        $commenter = Auth::user();
+        $commentOwner = Auth::user();
     
-        if ($postOwner->id !== $commenter->id) {
-            $this->makeNotification($commenter, $postOwner);
+        if ($postOwner->id !== $commentOwner->id) {
+            $this->makeNotification($commentOwner, $postOwner, $comment->id);
         }
 
     }
@@ -70,11 +70,13 @@ class PostComment extends Component
         $this->dispatch('commentCreated');
     }
 
-    private function makeNotification($userActed, $whoPosted)
+    private function makeNotification($commetOwner, $whoPosted, $commentId)
     {
    
         $notification = new Notification;
         $notification->user_id = $whoPosted->id; 
+        $notification->comment_id = $commentId; 
+
         $notification->type = 'comment'; // or 'like'
         $notification->post_id = $this->post_id;
         $notification->is_read = false;
@@ -99,5 +101,6 @@ class PostComment extends Component
         'post-updated' => '$postUpdated',
         'createdNotication' => '$createdNot',
         'notificationCreated'=>'$notification',
+        'createdNotication' => '$not'
     ];
 }

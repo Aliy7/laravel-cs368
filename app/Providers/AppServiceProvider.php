@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Providers;
-
+use App\Services\QuoteGeneratorService;
 use Illuminate\Support\ServiceProvider;
+use App\Services\QuoteGeneratorInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -11,7 +12,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bindIf(QuoteGeneratorInterface::class, function ($app) {
+            return new QuoteGeneratorService();
+        });            
+        
     }
 
     /**

@@ -9,7 +9,7 @@ class Notification extends Model
 {
     use HasFactory;
     protected $fillable = ['type', 'is_read'];
-    protected $guarded = ['user_id', 'post_id'];
+    protected $guarded = ['user_id', 'post_id', 'comment_id'];
 
     protected $casts = [
         'is_read' => 'boolean', // Cast is_read to boolean
@@ -37,18 +37,9 @@ class Notification extends Model
     }
     public function comment()
     {
-        return $this->belongsTo(Comment::class, 'comment_id');
+        return $this->belongsTo(Comment::class, 'notification_id');
     }
 
-public function reactedPerson()
-{
-    if ($this->type == 'comment') {
-        $comment = Comment::where('post_id', $this->post_id)->latest()->first();
-        return $comment ? $comment->user->username : 'Unknown User';
 
-    }
-
-    return null;
-}
 
 }

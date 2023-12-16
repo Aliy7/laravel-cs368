@@ -23,12 +23,16 @@
         </h2>
     </x-slot>
 
-<div>
+
+
+    
     @livewire('post.create-post')
     @livewire('post.show-post')
+
+
+    {{-- @livewire('quote.show-quote') --}}
     {{-- @livewire('display.post-comment-display') --}}
 
-</div>
                  <a href="/" > welcome</a>
 
 

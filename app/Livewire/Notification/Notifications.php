@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Notification;
 
 use Livewire\Component;
 use App\Models\Notification;
@@ -12,6 +12,11 @@ use function Livewire\Volt\layout;
 class Notifications extends Component
 {
     public $userNotification;
+
+
+    protected $listerners =[
+   'commentCreated' => '$commmentGenerated'
+    ];
 
     public function mount()
     {
@@ -33,7 +38,6 @@ class Notifications extends Component
         $notification = Notification::find($notificationId);
         if ($notification && $notification->user == auth()->id()) {
             $notification->update(['is_read' => true]);
-            // $this->dispatch('notificationCreated');
         }
     }
 
@@ -49,7 +53,7 @@ class Notifications extends Component
     
     public function sendEmailNotification($notification)
     {
-        $user = $notification->user; // Assuming Notification model has a 'user' relationship
+        $user = $notification->user;
         Mail::to($user->email)->send(new EmailNotification($notification));
     }
 
