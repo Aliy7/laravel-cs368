@@ -17,8 +17,7 @@ use App\Livewire\ImageUpload;
 use App\Livewire\Post\PostEdit;
 use App\Livewire\Post\ShowPost;
 use App\Livewire\Post\CreatePost;
-use App\Livewire\Post\ManagePost;
-use App\Livewire\Post\PhotoUpload;
+;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Livewire\Comment\PostComment;
@@ -26,11 +25,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Livewire\Display\PostCommentDisplay;
 use App\Livewire\Notification\Notifications;
-use App\Http\Controllers\Post\PostController;
-use App\Http\Controllers\QuoteGeneratorController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Comment\CommentController;
-
+use App\Livewire\Post\DeletePost;
+use App\Livewire\Profile\ProfileComponent;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,7 +51,7 @@ Route::get('/delete/{postId}', function ($postId) {
 })->middleware('auth')->name('posts.delete');
 
 // Livewire route
-Route::delete('/delete/{postId}', ManagePost::class)
+Route::delete('/delete/{postId}', DeletePost::class)
      ->middleware('auth')
      ->name('posts.delete');
 
@@ -112,7 +108,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/{userId}/posts', PostCommentDisplay::class)->name('user.posts');
     Route::get('/notifications', Notifications::class)->name('notifications');
 
-
+Route::get('profile', ProfileComponent::class)->name('profile.update-profile');
 
 });
 

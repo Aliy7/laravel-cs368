@@ -36,7 +36,7 @@
 
                                         @livewire('menu.ellipsis-menu') --}}
                                         <!-- Including the ManagePost Livewire component -->
-                                        @livewire('post.manage-post', ['postId' => $post->id])
+                                        @livewire('post.delete-post', ['postId' => $post->id])
                                    
        
                                     </div>
@@ -95,7 +95,7 @@
                                 </a>
                             </div>
                             <div class="shrink-0">
-                                @livewire('post.manage-post', ['postId' => $post->id], key('manage-post-'.$post->id))
+                                @livewire('post.delete-post', ['postId' => $post->id], key('manage-post-'.$post->id))
                         
                             </div>
                         </div>

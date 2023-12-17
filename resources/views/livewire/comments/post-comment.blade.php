@@ -22,8 +22,8 @@
     </div>
     <!-- Add Comment Form -->
     @auth
-    <form wire:submit.prevent="submitComment" class="mt-4">
-        <textarea wire:model.defer="content" placeholder="Add a comment..."
+    <form wire:submit="submitComment" class="mt-4">
+        <textarea wire:model="content" placeholder="Add a comment..."
                   class="w-full h-24 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-300 text-gray-700"></textarea>
         <x-primary-button type="submit">{{ __('Send Comment') }}</x-primary-button>
     </form>

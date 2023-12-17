@@ -5,7 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\User;
 use App\Models\Role; 
-class RoleManagement extends Component
+namespace App\Livewire\Role extends Component
 {
 
     public $users;
@@ -40,7 +40,7 @@ class RoleManagement extends Component
         $user = User::find($userId);
         if ($user) {
             $user->roles()->sync($this->selectedRoleId[$userId]);
-            $this->dispatchBrowserEvent('notify', 'Role assigned successfully.');
+            $this->dispatch('notify', 'Role assigned successfully.');
         }
     }
 }

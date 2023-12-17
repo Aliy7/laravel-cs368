@@ -16,11 +16,8 @@ class ShowPost extends Component
     protected $listeners = ['postCreated' => '$refreshPosts',
                             'post-updated' => '$refresh',
                             'postDeleted' => '$deletePost',
-                            'postEdited' => '$editPost',
-                            'qouteGenerated' => '$qouteGenerated'
+                            'postEdited' => '$editPost',  
                   ];
-
-
     public function allPosts()
     {
         return Post::with(['comments.user.profile', 'user.profile'])

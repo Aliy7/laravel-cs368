@@ -43,7 +43,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $user->first_name='Hassan';
         $user->last_name='Bin Ali';
         $user->email = 'hass@swansea.ac.uk';
-        $user->password = bcrypt('Swansea123@!'); 
+        $user->password = bcrypt('Swansea123@'); 
         $user->save();
 
         

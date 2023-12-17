@@ -10,7 +10,7 @@ use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Rule;
 use Livewire\Form;
 
-class LoginForm extends Form
+namespace App\Livewire\Forms extends Form
 {
     #[Rule('required|string|email')]
     public string $email = '';

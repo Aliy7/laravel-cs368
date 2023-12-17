@@ -4,7 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\User;
-class AdminDashboard extends Component
+namespace App\Livewire\Role extends Component
 {
     public function render()
     {

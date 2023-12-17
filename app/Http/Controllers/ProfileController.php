@@ -31,40 +31,45 @@ class ProfileController extends Controller
     
         // Find the user record based on the ID
         $user = User::findOrFail($userId);
-    
+        $profile = $user->profile;
+
         // You can add any additional logic here if needed
     
         // Return the view with the user data
         return view('profile.edit', compact('user'));
     }
 
-    /**
-     * Update the user's profile information.
-     */
-    // public function update(ProfileUpdateRequest $request): RedirectResponse
-    // {
-    //     $request->user()->fill($request->validated());
 
-    //     if ($request->user()->isDirty('email')) {
-    //         $request->user()->email_verified_at = null;
-    //     }
-
-    //     $request->user()->save();
-
-    //     return Redirect::route('profile.edit')->with('status', 'profile-updated');
-    // }
 
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $user = Auth::user(); // Get the currently authenticated user
+        $user = Auth::user(); 
+        $profile = $user->profile;
+        
+        $user->update([
+            'username' => $request->username,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+        ]);
 
-        // Fill user with validated request data
+        // Update profile details
+        $profile->update([
+            'bio' => $request->bio,
+            'phone_number' => $request->phone_number,
+            'date_of_birth' => $request->date_of_birth,
+            'website_url' => $request->website_url,
+            'location' => $request->location,
+            // Add other profile fields if necessary
+        ]);
+
+
        $request -> $user->fill($request->validated());
 
-        // Check if the email field has been modified
+     
         if ( $request-> $user->isDirty('email')) {
             $user->email_verified_at = null;
-            // Optionally: Trigger a process to send a new email verification notification
+      
         }
 
         $request->$user->save(); // Save the changes to the user

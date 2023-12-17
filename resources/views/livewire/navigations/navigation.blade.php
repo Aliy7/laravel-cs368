@@ -28,29 +28,37 @@
 
                 @auth
 
-                <!--A link for notification-->
-<a href="{{ route('notifications') }}" class="text-white hover:text-gray-300 mr-8 px-3 py-2 rounded-md text-sm font-medium bg-blue-500 hover:bg-blue-600">
-    <i class="fas fa-bell"></i> Notifications
-</a>
+                    <!--A link for notification-->
+                    <a href="{{ route('notifications') }}"
+                        class="text-white hover:text-gray-300 mr-8 px-3 py-2 rounded-md text-sm font-medium bg-blue-500 hover:bg-blue-600">
+                        <i class="fas fa-bell"></i> Notifications
+                    </a>
 
-    <!-- Posts Link -->
-    <a href="{{ route('user.posts', ['userId' => auth()->id()]) }}" class="text-white hover:text-gray-300 mr-8 px-3 py-2 rounded-md text-sm font-medium bg-blue-500 hover:bg-blue-600">
-        <i class="far fa-id-badge"></i> Posts
-    </a>
+                    <!-- Posts Link -->
+                    <a href="{{ route('user.posts', ['userId' => auth()->id()]) }}"
+                        class="text-white hover:text-gray-300 mr-8 px-3 py-2 rounded-md text-sm font-medium bg-blue-500 hover:bg-blue-600">
+                        <i class="far fa-id-badge"></i> Posts
+                    </a>
 
-    <!-- Profile Link -->
-    <a href="{{ route('profile.edit') }}" class="text-white hover:text-gray-300 mr-8 px-3 py-2 rounded-md text-sm font-medium">
+                    <!-- Profile Link -->
+                    {{-- <a href="{{ route('profile.edit') }}" class="text-white hover:text-gray-300 mr-8 px-3 py-2 rounded-md text-sm font-medium">
         <i class="far fa-id-badge"></i> Profile
-    </a>
+    </a>  --}}
 
-    <!-- Logout Button -->
-    <form method="POST" action="{{ route('logout') }}" class="inline">
-        @csrf
-        <button type="submit" class="text-white hover:text-gray-300 px-3 py-2 rounded-md text-sm font-medium">
-            <i class="fas fa-sign-out-alt"></i> Logout
-        </button>
-    </form>
-@endauth
+                    <!--Proifile component link--->
+                    <a href="{{ route('profile.update-profile') }}" class="text-white hover:text-gray-300">
+                        <i class="far fa-id-badge"></i> Profile
+                    </a>
+
+                    <!-- Logout Button -->
+                    <form method="POST" action="{{ route('logout') }}" class="inline">
+                        @csrf
+                        <button type="submit"
+                            class="text-white hover:text-gray-300 px-3 py-2 rounded-md text-sm font-medium">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </form>
+                @endauth
 
                 {{-- @auth
        
