@@ -46,8 +46,14 @@ class RolesAndPermissionsSeeder extends Seeder
         $user->password = bcrypt('Swansea123@'); 
         $user->save();
 
-        
-
+        $user = new User();
+        $user->id = 22;
+        $user->username = 'Mod';
+        $user->first_name='Hussein';
+        $user->last_name='Bin Ali';
+        $user->email = 'hussein@swansea.ac.uk';
+        $user->password = bcrypt('Swansea123@'); 
+        $user->save();
         $user = User::find(21); 
         $user->assignRole('admin');
 

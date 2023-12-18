@@ -10,26 +10,29 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $fillable =[ 'title','content','image_url'];
+    protected $fillable = ['title', 'content', 'image_url'];
 
-    public $guarded =[
-        'category_id' ,  'user_id',
+    public $guarded = [
+        'category_id',  'user_id',
     ];
-    public function user(){
-        return $this -> belongsTo(User::class);
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
-    function category(){
+    function category()
+    {
         return $this->belongsTo(Category::class);
     }
-   
-   
-    public function comments(){
-        return $this -> hasMany(Comment :: class);
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 
-    public static function boot(){
+    public static function boot()
+    {
         parent::boot();
-        static::deleting(function($post){
+        static::deleting(function ($post) {
             $post->comments()->delete();
         });
     }
@@ -38,8 +41,11 @@ class Post extends Model
         return $this->morphMany(Like::class, 'likable');
     }
     public function notifications()
-{
-    return $this->hasMany(Notification::class, 'post_id');
-}
-
+    {
+        return $this->hasMany(Notification::class, 'post_id');
+    }
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'post_tag', 'tag_id', 'post_id');
+    }
 }

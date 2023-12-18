@@ -2,14 +2,16 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex items-center">
-                <!-- Logo -->
-                <a href="{{ route('dashboard') }}" class="text-white">
-                    <x-application-logo class="block h-9 w-auto fill-current" />
-                </a>
+            
+               <!-- Logo -->
+               <a href="{{ route('dashboard') }}" class="flex items-center">
+                <img src="{{ asset('storage/logo/venty.png') }}" alt="Logo" class="h-10 w-auto">
+            </a>
+
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        {{ __('Venty') }}
                     </x-nav-link>
 
                 </div>
@@ -40,10 +42,7 @@
                         <i class="far fa-id-badge"></i> Posts
                     </a>
 
-                    <!-- Profile Link -->
-                    {{-- <a href="{{ route('profile.edit') }}" class="text-white hover:text-gray-300 mr-8 px-3 py-2 rounded-md text-sm font-medium">
-        <i class="far fa-id-badge"></i> Profile
-    </a>  --}}
+   
 
                     <!--Proifile component link--->
                     <a href="{{ route('profile.update-profile') }}" class="text-white hover:text-gray-300">
@@ -60,26 +59,7 @@
                     </form>
                 @endauth
 
-                {{-- @auth
-       
-                     <a href="{{ route('user.posts', ['userId' => auth()->id()]) }}" class="text-white hover:text-gray-300">
-                        <i class="far fa-id-badge"></i> Posts
-                    </a>
-              
-                <a href="{{ route('profile.edit') }}" class="text-white hover:text-gray-300">
-                    <i class="far fa-id-badge"></i> Profile
-                </a>
-       
-
-                    <form method="POST" action="{{ route('logout') }}" class="ml-4">
-                        @csrf
-                        <button type="submit" class="text-white hover:text-gray-300">
-                            <i class="fas fa-sign-out-alt"></i> Logout
-                        </button>
-                    </form>
-                @endauth --}}
             </div>
-
             <!-- Hamburger -->
             <div class="-mr-2 flex items-center sm:hidden">
                 <button @click="open = !open"
@@ -97,5 +77,6 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
         </div>
+
     </div>
 </nav>

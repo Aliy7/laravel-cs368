@@ -40,7 +40,7 @@ class PostEdit extends Component
         $this->content = $post->content;
     }
 
- 
+
 
     public function edit()
     {
@@ -103,7 +103,7 @@ class PostEdit extends Component
 
     public function cancelEdit()
     {
-        $this->isEditing = false; // Revert editing mode without saving
+        $this->isEditing = false; 
     }
     public function refreshPostData()
     {

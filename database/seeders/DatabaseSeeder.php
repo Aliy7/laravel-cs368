@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Livewire\PostTag;
 use App\Models\Category;
 use Illuminate\Database\Seeder;
 use App\Models\User;
@@ -23,6 +24,9 @@ class DatabaseSeeder extends Seeder{
         $this->call(LikeSeeder::class);
         $this->call(ProfileSeeder::class);
         $this->call(RolesAndPermissionsSeeder::class);
-       
+        $this->call(TagSeeder::class);
+        $this->call(PostTagSeeder::class);
+
+
     }
 }

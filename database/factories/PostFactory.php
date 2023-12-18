@@ -20,15 +20,7 @@ class PostFactory extends Factory {
     {
         
         return [
-            /**
-            * If there are users in the database, select a random user's ID.
-            * Otherwise create a new user and use existing user's ID
-            */
-            // 'user_id' => User::count() ? User::all()->random()->id : User::factory()->create()->id,
-            // 'user_id' => User::inRandomOrder()->first()->id, // Random existing user ID
-            // 'category_id' => Category::inRandomOrder()->first()->id, // Random existing category ID
-            // 'title' =>fake()->sentence,
-            // 'content' => fake()->paragraph(7),
+    
             'user_id' => User::inRandomOrder()->first()->id, // Assuming users exist
             'category_id' => Category::inRandomOrder()->first()->id ?? Category::factory()->create()->id,
             'title' => fake()->sentence,

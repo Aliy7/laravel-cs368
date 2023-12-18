@@ -2,11 +2,13 @@
 
 namespace App\Livewire\Post;
 
-use Livewire\Component;
 use App\Models\Post;
+use Livewire\Component;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Validate;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 
 class CreatePost extends Component
@@ -15,23 +17,19 @@ class CreatePost extends Component
     use WithFileUploads;
     public $title;
     public $content;
-    public $image; 
-    public $image_url = null; 
-
-    
+    public $image;
+    public $image_url = null;
     public $post;
-
     protected $listeners = [
         'commentCreated' => '$commentCreated',
         'postDeleted' => '$postDeleted'
     ];
     protected $rules = [
-        'title' => 'required|string|regex:/^[a-zA-Z0-9 ]+$/|max:50|min:10',
-        'content' => 'required|string|regex:/^[a-zA-Z0-9 ]+$/|max:3000|min:10',
-        
-        'image' => 'nullable|image|max:1024',
+        'title' => 'required|string|regex:/^(?=.*[a-zA-Z])[a-zA-Z0-9 .,"\']+$/|max:50|min:10',
+        'content' => 'required|string|regex:/^(?=.*[a-zA-Z])[a-zA-Z0-9 .,"\']+$/|max:3000|min:10',
+        'image' => 'nullable|image|max:1024'
     ];
-
+    
     protected $messages = [
         'title.required' => 'You should write stuff to continue.',
         'title.min' => 'Minimum 10 characters: write something sensible :min characters.',
@@ -44,34 +42,30 @@ class CreatePost extends Component
         'image.max' => 'The image may not be larger than :max kilobytes.'
     ];
 
-
-    public function render(Request $request)
+    public function render()
     {
         return view('livewire.posts.create-post');
     }
 
     public function store()
     {
-        // Check if the user is authenticated
+        $this->validate();
         if (!Auth::check()) {
             return redirect()->route('login');
         }
-        $this->validate();
-        $post = new Post();
-        $post->title = $this->title;
-        $post->content = $this->content;
-        $post->user_id = Auth::id();
-        $post->image_url = $this->image_url; 
-        $post->created_at = now();
-        $post->updated_at = now();
+      
+        DB::transaction(function () {
+            $post = new Post();
+            $post->title = $this->title;
+            $post->content = $this->content;
+            $post->user_id = Auth::id();
 
-        if ($this->image) {
-            $fileName = 'post_images/' . uniqid() . '.' . $this->image->getClientOriginalExtension();
-            $this->image->storeAs('public', $fileName); 
-            $post->image_url = $fileName; 
-        }
-
-        $post->save();
+            if ($this->image) {
+                $fileName = $this->uploadImage();
+                $post->image_url = $fileName;
+            }
+            $post->save();
+            });  
         session()->flash('success', 'Post created successfully.');
         $this->reset(['title', 'content', 'image']);
 
@@ -80,14 +74,10 @@ class CreatePost extends Component
     }
     public function uploadImage()
     {
-        $this->validate([
-            'image' => 'nullable|image|max:1024', // Image validation
-        ]);
-
-        if ($this->image) {
-            $this->image_url = $this->image->store('profile_pictures', 'public');
-            session()->flash('message', 'Image uploaded successfully');
-        }
+        $this->validate();
+        $fileName = 'post_images/' . Str::random(40) . '.' . $this->image->getClientOriginalExtension();
+        $this->image->storeAs('public', $fileName);
+        return $fileName;
     }
     public function resetPost()
     {
@@ -95,12 +85,5 @@ class CreatePost extends Component
         $this->content = '';
         $this->image_url = null;
         $this->image = null;
-    }
-    public function routes()
-    {
-        return [
-            'store' => 'posts.create',
-            'render' => 'posts.render'
-        ];
     }
 }

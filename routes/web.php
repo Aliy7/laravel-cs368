@@ -1,33 +1,34 @@
 <?php
 //namespace App\Http\Controllers;
-namespace App\Http\Controllers\Post;
 namespace App\Http\Controllers\User;
 
 namespace App\Http\Controllers\Comment;
 
 namespace App\Livewire;
+namespace App\Http\Controllers\Post;
 use App\Models\User;
 
 
 use App\Models\Post; 
 use App\Mail\TestEmail;
-use App\Livewire\Quote\ShowQuote;
+use App\Livewire\PostTag;
 use App\Livewire\LikeUnlike;
 use App\Livewire\ImageUpload;
 use App\Livewire\Post\PostEdit;
 use App\Livewire\Post\ShowPost;
 use App\Livewire\Post\CreatePost;
 ;
+use App\Livewire\Post\DeletePost;
+use App\Livewire\Quote\ShowQuote;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Livewire\Comment\PostComment;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Profile\ProfileComponent;
 use App\Http\Controllers\ProfileController;
 use App\Livewire\Display\PostCommentDisplay;
 use App\Livewire\Notification\Notifications;
-use App\Livewire\Post\DeletePost;
-use App\Livewire\Profile\ProfileComponent;
-
+use App\Http\Controllers\Post\PostController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,8 +46,6 @@ Route::get('/', function () {
 
 
 Route::get('/delete/{postId}', function ($postId) {
-
-    dd($postId);
     return view('posts.manage-post', compact($postId)); 
 })->middleware('auth')->name('posts.delete');
 
@@ -81,9 +80,9 @@ Route::get('/post/{post_id}/comments', [PostComment::class, 'post.comments'])->m
 Route::get('/dashboard', function () {
     $posts = Post::with(['comments.user', 'user'])->get();
 
-    $authenticatedUserId = Auth::id();
-    $posts = $posts->map(function ($post) use ($authenticatedUserId) {
-        $post->isAuthUserPost = ($post->user_id === $authenticatedUserId);
+    $verifiedUserId = Auth::id();
+    $posts = $posts->map(function ($post) use ($verifiedUserId) {
+        $post->isAuthUserPost = ($post->user_id === $verifiedUserId);
         return $post;
     });
 
@@ -98,7 +97,6 @@ Route::get('/like-unlike/{type}/{id}', LikeUnlike::class)->name('like-unlike');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    //Route::get('/profile/edit/{userId}', 'ProfileController@edit')->name('profile.edit');
 
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -113,8 +111,10 @@ Route::get('profile', ProfileComponent::class)->name('profile.update-profile');
 });
 
 
-// Route::get('/quotes', [QuoteGeneratorController::class, 'showQuotes'])->name('quotes.show');
 Route::get('/quotes', ShowQuote::class)->name('show-quote');
+
+Route::get('/tag/{postId}', PostTag::class)->name('post.tag');
+Route::get('/posts/tag/{tag}', [PostController::class, 'showTag'])->name('posts.by.tag');
 
 
 require __DIR__.'/auth.php';

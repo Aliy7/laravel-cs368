@@ -11,8 +11,7 @@
                         {{ $comment->user->username }}
                     </a>
                 </div>
-                @livewire('like-Unlike', ['type' => 'comment', 'modelId' => $post_id])
-                {{-- @livewire('likes', ['type' => 'comment', 'modelId' => $comment->id]) --}}
+                @livewire('like-unlike', ['type' => 'comment', 'modelId' => $comment->id], key($comment->id))
 
 
             </div>

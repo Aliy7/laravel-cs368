@@ -21,7 +21,6 @@ class ProfileFactory extends Factory
         return [
            'user_id' => fake()->unique()->numberBetween(1, $users->count()),
             'bio' => fake()->sentence,
-         
             'phone_number' => fake()->phoneNumber,
             'date_of_birth' => fake()->date($format='Y-m-d', $max='now'),
             'image_url' => fake()->imageUrl(),

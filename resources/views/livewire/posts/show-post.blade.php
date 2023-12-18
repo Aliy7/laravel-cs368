@@ -9,6 +9,7 @@
                 @if($allPosts && $allPosts->count() > 0)
                     @foreach ($allPosts as $post)
 
+
                         <div class="mt-4 bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
                             <div class="flex items-center mb-2">
                                 @if($post->user->profile && $post->user->profile->avatar_url)
@@ -16,12 +17,7 @@
                                         <img src="{{ $post->user->profile->avatar_url }}" alt="{{ $post->user->username }}'s avatar" class="rounded-full h-8 w-8 mr-2">
                                     </a>
                                 @endif
-                                {{-- <span class="font-medium mr-2">Posted by:</span>
-                                @livewire('menu.ellipsis-menu')
-
-                                <a href="{{ route('profile.showProfile', $post->user->id) }}" class="text-blue-500 hover:text-blue-700">
-                                    {{ $post->user->username }}
-                                </a> --}}
+                              
                                 <div class="flex justify-between items-center w-full">
                                     <!-- Left side: "Posted by" and username -->
                                     <div class="flex items-center grow">
@@ -31,17 +27,9 @@
                                         </a>
                                     </div>
                                     <div class="shrink-0">
-                                        {{-- @livewire('menu.ellipsis-menu')
-
-
-                                        @livewire('menu.ellipsis-menu') --}}
-                                        <!-- Including the ManagePost Livewire component -->
                                         @livewire('post.delete-post', ['postId' => $post->id])
-                                   
-       
                                     </div>
                                 </div>
-                                
                             </div>
                             <a href="{{ route('profile.showProfile', $post->user->id) }}" class="text-lg font-semibold">{{ $post->title }}</a>
                             <div class="text-gray-600 dark:text-gray-300">{{ $post->content }}</div>
@@ -50,14 +38,34 @@
                            <img src="{{ Storage::url($post->image_url) }}" alt="Post Image" class="post-image">
                             @endif
 
+                            {{-- <h1 class="pt-4 italic"> 
+                                Tags:
+                                @foreach($post->tags as $tag )
+                                {{$tag->name}}
+                                @endforeach
+                            </h1> --}}
+                            <div class="flex flex-wrap gap-2">
+                                @if($post->tags->isNotEmpty())
+                                    Tags:
+                                    @foreach ($post->tags as $tag)
+                                        <a href="{{ route('posts.by.tag', $tag->id) }}" class="px-3 py-1 bg-blue-200 text-blue-800 rounded-full text-sm font-medium">
+                                            #{{ $tag->name }}
+                                        </a>
+                                    @endforeach
+                                @endif
+                            </div>
+                            
+                            
+                            
                              @livewire('post.post-edit', ['postId' => $post->id], key('post-edit-'.$post->id))
-                             {{-- @livewire('like-Unlike', ['type' => 'post', 'modelId' => 1]) --}}
-                             {{-- @livewire('likes', ['type' => 'post', 'modelId' => $post->id]) --}}
-
+                           
                              @livewire('like-Unlike', ['type' => 'post', 'modelId' => $post->id])
 
                                <!-- Include the Livewire post-comment component -->
+                               
                                @livewire('comment.post-comment', ['post_id' => $post->id], key('post-comment-'.$post->id))
+                               {{-- @livewire('post-tag', ['postId' => $post->id], key('post-tags-'.$post->id)) --}}
+
                         </div>
                     @endforeach
                     {{ $allPosts->links() }}

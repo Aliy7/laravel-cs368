@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Venty') }}</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -15,16 +15,15 @@
     </script>
 
     <!-- Livewire Styles -->
+  
 
     <!-- Scripts -->
     @vite(['resources/js/app.js'])
     @livewireStyles
     @livewireScripts
 </head>
-
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-        {{-- // @include('layouts.navigation') --}}
         @include('livewire.navigations.navigation')
 
         <!-- Page Heading -->
@@ -37,16 +36,13 @@
         @endif
 
         <!-- Page Content -->
-        <main>
+        <main class="px-4 sm:px-6 lg:px-8">
             {{ $slot }}
         </main>
     </div>
 
-    <!-- At the end of your layout's <head> section -->
-
     <!-- Livewire Scripts -->
-
-
+   
 </body>
 
 </html>

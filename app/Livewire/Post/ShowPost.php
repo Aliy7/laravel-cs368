@@ -1,15 +1,18 @@
 <?php
 
 namespace App\Livewire\Post;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Tag;
 use App\Models\Post;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Auth;
 
 class ShowPost extends Component
 {
     use WithPagination;
-
+    public $tags = []; 
+    public $allTags;
+    public $selectedTag = null;
     protected $userPosts;
     protected $allPosts;
     protected $listener = ['commentCreated' => '$getComments'];
@@ -41,4 +44,7 @@ class ShowPost extends Component
         ]);
     }
     
+    public function mount(){
+        $this->allTags = Tag::all();
+    }
 }

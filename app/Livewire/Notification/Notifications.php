@@ -36,7 +36,8 @@ class Notifications extends Component
     public function markAsRead($notificationId)
     {
         $notification = Notification::find($notificationId);
-        if ($notification && $notification->user == auth()->id()) {
+        if ($notification && $notification->user->id == auth()->id()) {
+        
             $notification->update(['is_read' => true]);
         }
     }
@@ -44,8 +45,6 @@ class Notifications extends Component
     public function render()
     {
         $this->loadNotifications();
-
-    
         return view('livewire.notifications', [
             'userNotification' => $this->userNotification
         ])->layout('layouts.app');
@@ -56,7 +55,4 @@ class Notifications extends Component
         $user = $notification->user;
         Mail::to($user->email)->send(new EmailNotification($notification));
     }
-
-  
-
 }

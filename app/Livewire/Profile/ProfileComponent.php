@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Livewire\Profile;
 
 use App\Models\User;
@@ -10,11 +11,10 @@ use Livewire\Features\SupportFileUploads\WithFileUploads;
 
 class ProfileComponent extends Component
 {
-
     use WithFileUploads;
     public $username, $email, $first_name, $last_name, $bio, $phone_number, $date_of_birth;
-    public $image_url; // Use this for file upload
-    public $user; // Stores the user instance
+    public $image_url;
+    public $user;
     public $isEditing = false;
 
     protected function rules()
@@ -36,7 +36,7 @@ class ProfileComponent extends Component
             'image_url' => 'nullable|image|max:2048',
         ];
     }
-    
+
     public function mount(): void
     {
         $this->user = Auth::user();
@@ -74,39 +74,35 @@ class ProfileComponent extends Component
             'date_of_birth' => $this->date_of_birth,
         ];
 
-      
+
 
         $this->user->profile()->updateOrCreate(['user_id' => $this->user->id], $profileData);
-
         session()->flash('success', 'User profile successfully updated.');
         $this->isEditing = false;
-        $this->reset('image_url'); // Clear the file upload
+        $this->reset('image_url');
     }
     public function isEditingNow()
     {
         $this->isEditing = true;
     }
-    
-public function notEditing()
-{
-    $this->isEditing = false;
-} 
 
-public function updateProfilePicture()
-{
-    $this->validate([
-        'image_url' => 'nullable|image|max:2048',
-    ]);
-
-    if ($this->image_url) {
-        $imagePath = $this->profile_picture->store('avatars', 'public');
-        Auth::user()->profile()->updateOrCreate([], ['profile_pic' => $imagePath]);
-        $this->image_url=asset('storage/'. $imagePath);
-
+    public function notEditing()
+    {
+        $this->isEditing = false;
     }
 
-    session()->flash('message', 'Profile picture updated successfully.');
-}
+    public function updateProfilePicture()
+    {
+        $this->validate([
+            'image_url' => 'nullable|image|max:2048',
+        ]);
 
-}
+        if ($this->image_url) {
+            $imagePath = $this->profile_picture->store('avatars', 'public');
+            Auth::user()->profile()->updateOrCreate([], ['profile_pic' => $imagePath]);
+            $this->image_url = asset('storage/' . $imagePath);
+        }
 
+        session()->flash('message', 'Profile picture updated successfully.');
+    }
+}

@@ -13,14 +13,15 @@ return new class extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->string('type'); 
+            $table->string('type');
             $table->boolean('is_read')->default(false);
             $table->timestamps();
-
-            $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('post_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('comment_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+        
+            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('post_id')->nullable()->constrained('posts')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('comment_id')->nullable()->constrained('comments')->onUpdate('cascade')->onDelete('cascade');
         });
+        
     }
 
     /**

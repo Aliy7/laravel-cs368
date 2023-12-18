@@ -5,6 +5,10 @@ use App\Models\Like;
 use App\Models\Post;
 use App\Models\Comment;
 use Livewire\Component;
+use App\Models\Notification;
+use App\Mail\EmailNotification;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class LikeUnlike extends Component
 {
@@ -58,67 +62,67 @@ class LikeUnlike extends Component
     {
         $this->handleToggle(-1); // -1 for dislike
     }
-
     private function handleToggle($value)
+    {
+        if (!auth()->check()) {
+            return redirect()->route('login');
+        }
+    
+        $userId = auth()->id();
+        $model = $this->getModelInstance();
+    
+        if ($model) {
+            $existingLike = $model->likes()->where('user_id', $userId)->first();
+    
+            if ($existingLike) {
+                if ($existingLike->value === $value) {
+                    // User is "undoing" the like/dislike
+                    $existingLike->delete();
+                } else {
+                    // User is changing from like to dislike or vice versa
+                    $existingLike->value = $value;
+                    $existingLike->save();
+                }
+            } else {
+                // This is a new like/dislike action
+                $like = new Like();
+                $like->user_id = $userId;
+                $like->value = $value;
+                $model->likes()->save($like);
+            }
+    
+            $this->loadLikesData();
+             $this->makeLikeNotification($model, $userId);
+
+        }
+    }
+    
+
+private function makeLikeNotification($model, $userId)
 {
-    if (!auth()->check()) {
-        return redirect()->route('login');
+  $notification = new Notification;
+    $notification->user_id = $userId;
+    $notification->type = 'like';
+
+    // Determine if it's a like on a post or a comment
+    if ($this->type === 'post') {
+        $notification->post_id = $model->id;
+        $notification->comment_id = null; // No comment ID for post likes
+    } elseif ($this->type === 'comment') {
+        $notification->comment_id = $model->id;
+        $notification->post_id = null; // No post ID for comment likes
     }
 
-    $userId = auth()->id();
-    $model = $this->getModelInstance();
-
-    if ($model) {
-        $existingLike = $model->likes()->where('user_id', $userId)->first();
-
-        if ($existingLike) {
-            if ($existingLike->value === $value) {
-                $existingLike->delete(); // Undoing the like/dislike
-            } else {
-                $existingLike->value = $value; // Change the value
-                $existingLike->save(); // Explicitly save the updated record
-            }
-        } else {
-            // Explicitly set 'user_id' when creating a new like
-            $like = new Like();
-            $like->user_id = $userId;
-            $like->value = $value;
-            $model->likes()->save($like);
-        }
-
-        $this->loadLikesData();
+    $notification->is_read = false;
+    $notification->save();
+    try {
+        // Assuming you want to notify the owner of the post/comment
+        $owner = $this->type === 'post' ? $model->user : $model->commenter;
+        // Mail::to($owner->email)->queue(new EmailNotification($notification));
+    } catch (\Exception $e) {
+        Log::error('Error sending email: ' . $e->getMessage());
     }
 }
-// private function handleToggle($value)
-// {
-//     if (!auth()->check()) {
-//         return redirect()->route('login');
-//     }
-
-//     $userId = auth()->id();
-//     $model = $this->getModelInstance();
-
-//     if ($model) {
-//         $existingLike = $model->likes()->where('user_id', $userId)->first();
-
-//         if ($existingLike) {
-//             if ($existingLike->value === $value) {
-//                 $existingLike->delete(); // Undoing the like/dislike
-//             } else {
-//                 $existingLike->value = $value; // Switching from like to dislike or vice versa
-//                 $existingLike->save(); // Explicitly save the updated record
-//             }
-//         } else {
-//             $model->likes()->create([
-//                 'user_id' => $userId,
-//                 'value' => $value
-//             ]);
-//         }
-
-//         $this->loadLikesData();
-//     }
-// }
-
     private function getModelInstance()
     {
         return $this->type === 'post' 

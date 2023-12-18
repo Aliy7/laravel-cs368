@@ -83,13 +83,11 @@ class PostComment extends Component
         $notification->save();
 
         try {
-            Mail::to($whoPosted->email)->send(new EmailNotification($notification));
+            // Mail::to($whoPosted->email)->queue(new EmailNotification($notification));
         } catch (\Exception $e) {
             Log::error('Error sending email: ' . $e->getMessage());
-            // Handle the error appropriately
         }
         
-        // Mail::to($whoPosted->email)->send(new EmailNotification($notification));
     }
 
     public function render()
