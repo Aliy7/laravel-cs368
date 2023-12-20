@@ -8,7 +8,6 @@ use App\Services\QuoteGeneratorInterface;
 
 class ShowQuote extends Component
 {
-
     protected $listeners = ['refreshQuote' => 'fetchQuote'];
     public $quote;
 
@@ -20,9 +19,6 @@ class ShowQuote extends Component
         $this->quote = app(QuoteGeneratorService::class)->randomQuoteGenerator();
         $this->dispatch('refreshQuote');
     }
- 
-    
-
     public function render() {
  return view('livewire.quote.show-quote');    }
 }

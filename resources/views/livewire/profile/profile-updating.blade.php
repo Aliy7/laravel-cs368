@@ -25,7 +25,7 @@
         </div>
     @endif
         @if($isEditing)
-    <form wire:submit.prevent="save" class="mt-6 space-y-6">
+    <form wire:submit="save" class="mt-6 space-y-6">
         @csrf
         @method('patch')
 
@@ -37,7 +37,7 @@
         </div> --}}
         <div>
             <label for="username">{{ __('User name') }}</label>
-            <input wire:model.defer="username" id="username" type="text" class="mt-1 block w-full">
+            <input wire:model="username" id="username" type="text" class="mt-1 block w-full">
             @error('username') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
         </div>
         <!-- Additional User Fields -->
@@ -45,35 +45,35 @@
  <!-- First Name Field -->
  <div>
     <label for="first_name">{{ __('First Name') }}</label>
-    <input wire:model.defer="first_name" id="first_name" type="text" class="mt-1 block w-full">
+    <input wire:model="first_name" id="first_name" type="text" class="mt-1 block w-full">
     @error('first_name') <span class="error text-sm text-red-600">{{ $message }}</span> @enderror
 </div>
 
 <!-- Last Name Field -->
 <div>
     <label for="last_name">{{ __('Last Name') }}</label>
-    <input wire:model.defer="last_name" id="last_name" type="text" class="mt-1 block w-full">
+    <input wire:model="last_name" id="last_name" type="text" class="mt-1 block w-full">
     @error('last_name') <span class="error text-sm text-red-600">{{ $message }}</span> @enderror
 </div>
 
 <!-- Bio Field -->
 <div>
     <label for="bio">{{ __('Bio') }}</label>
-    <input wire:model.defer="bio" id="bio" type="text" class="mt-1 block w-full">
+    <input wire:model="bio" id="bio" type="text" class="mt-1 block w-full">
     @error('bio') <span class="error text-sm text-red-600">{{ $message }}</span> @enderror
 </div>
 
 <!-- Phone Number Field -->
 <div>
     <label for="phone_number">{{ __('Phone Number') }}</label>
-    <input wire:model.defer="phone_number" id="phone_number" type="text" class="mt-1 block w-full">
+    <input wire:model="phone_number" id="phone_number" type="text" class="mt-1 block w-full">
     @error('phone_number') <span class="error text-sm text-red-600">{{ $message }}</span> @enderror
 </div>
 
 <!-- Date of Birth Field -->
 <div>
     <label for="date_of_birth">{{ __('Date of Birth') }}</label>
-    <input wire:model.defer="date_of_birth" id="date_of_birth" type="date" class="mt-1 block w-full">
+    <input wire:model="date_of_birth" id="date_of_birth" type="date" class="mt-1 block w-full">
     @error('date_of_birth') <span class="error text-sm text-red-600">{{ $message }}</span> @enderror
 </div>
 
@@ -99,7 +99,7 @@
 <!-- Email Field -->
 <div>
     <label for="email">{{ __('Email') }}</label>
-    <input wire:model.defer="email" id="email" type="email" class="mt-1 block w-full">
+    <input wire:model="email" id="email" type="email" class="mt-1 block w-full">
     @error('email') <span class="error text-sm text-red-600">{{ $message }}</span> @enderror
 </div>
 

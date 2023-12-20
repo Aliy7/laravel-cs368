@@ -59,14 +59,14 @@
             </div>
         @else
             <!-- Edit Mode -->
-            <form wire:submit.prevent="updatePost" class="p-4">
+            <form wire:submit="updatePost" class="p-4">
                 <div class="mb-4">
-                    <input type="text" wire:model.defer="title" class="w-full h-14 bg-white font-semibold border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-300 text-gray-700">
+                    <input type="text" wire:model="title" class="w-full h-14 bg-white font-semibold border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-300 text-gray-700">
                     @error('title') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                 </div>
     
                 <div class="mb-4">
-                    <textarea wire:model.defer="content" class="w-full h-15 bg-white font-semibold border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-300 text-gray-700"></textarea>
+                    <textarea wire:model="content" class="w-full h-15 bg-white font-semibold border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-300 text-gray-700"></textarea>
                     @error('content') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                 </div>
     

@@ -13,7 +13,12 @@ class DeletePost extends Component
 
     public $showModal = false;
     public $postId;
-    public $isOpen = false; // For the ellipsis menu
+    public $isOpen = false; 
+
+    protected $listeners =[
+        'post-updated' => '$post-updated',
+        'postCreated' => '$postCreated'
+,    ];
 
     public function openModal($postId)
     {
@@ -67,10 +72,10 @@ class DeletePost extends Component
         if ($user && ($user->hasRole('admin') || $post->user_id == $user->id)) {
             $post->delete();
             session()->flash('message', 'Post deleted successfully.');
-            $this->dispatch('postDeleted');
+         
             return $this;
         }
-
+        $this->dispatch('postDeleted');
         session()->flash('error', 'Unauthorized action.');
     }
 }

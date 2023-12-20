@@ -1,23 +1,24 @@
 <?php
-//namespace App\Http\Controllers;
+
 namespace App\Http\Controllers\User;
 
 namespace App\Http\Controllers\Comment;
 
 namespace App\Livewire;
+
 namespace App\Http\Controllers\Post;
+
 use App\Models\User;
 
-
-use App\Models\Post; 
+use App\Models\Post;
 use App\Mail\TestEmail;
 use App\Livewire\PostTag;
-use App\Livewire\LikeUnlike;
+use App\Livewire\Likes\LikeUnlike;
 use App\Livewire\ImageUpload;
 use App\Livewire\Post\PostEdit;
 use App\Livewire\Post\ShowPost;
-use App\Livewire\Post\CreatePost;
-;
+use App\Livewire\Post\CreatePost;;
+
 use App\Livewire\Post\DeletePost;
 use App\Livewire\Quote\ShowQuote;
 use Illuminate\Support\Facades\Auth;
@@ -29,6 +30,8 @@ use App\Http\Controllers\ProfileController;
 use App\Livewire\Display\PostCommentDisplay;
 use App\Livewire\Notification\Notifications;
 use App\Http\Controllers\Post\PostController;
+use App\Livewire\Comment\EditComment;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -46,35 +49,37 @@ Route::get('/', function () {
 
 
 Route::get('/delete/{postId}', function ($postId) {
-    return view('posts.manage-post', compact($postId)); 
+    return view('posts.manage-post', compact($postId));
 })->middleware('auth')->name('posts.delete');
 
-// Livewire route
 Route::delete('/delete/{postId}', DeletePost::class)
-     ->middleware('auth')
-     ->name('posts.delete');
+    ->middleware('auth')
+    ->name('posts.delete');
+
+    Route::get('/comment{id}/edit', EditComment::class)->name('comment.edit');
 
 
-     Route::middleware(['auth'])->group(function () {
-        // Other routes
-    
-        // Livewire route for editing a post
-        Route::get('/posts/{id}/edit', PostEdit::class)->name('posts.edit');
-    });   
+    //comment editing still being tested
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/posts/{id}/edit', PostEdit::class)->name('posts.edit');
+
+});
+
 
 Route::get('/posts/create', function () {
     return view('posts.create-post'); // 
 })->middleware('auth')->name('posts.create');
 
-// Standard route to a Blade view that includes the ShowPost Livewire component
 Route::get('/posts/show', function () {
-    return view('posts.show-post'); 
+    return view('posts.show-post');
 })->middleware('auth')->name('posts.show');
 
 
 
 
-Route::get('/post/{post_id}/comments', [PostComment::class, 'post.comments'])->middleware('auth')->name('post-comment.postcomment');
+Route::get('/post/{post_id}/comments', [PostComment::class, 'post.comments'])
+    ->middleware('auth')->name('post-comment.postcomment');
 
 
 Route::get('/dashboard', function () {
@@ -106,8 +111,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/{userId}/posts', PostCommentDisplay::class)->name('user.posts');
     Route::get('/notifications', Notifications::class)->name('notifications');
 
-Route::get('profile', ProfileComponent::class)->name('profile.update-profile');
-
+    Route::get('profile', ProfileComponent::class)->name('profile.update-profile');
 });
 
 
@@ -117,4 +121,4 @@ Route::get('/tag/{postId}', PostTag::class)->name('post.tag');
 Route::get('/posts/tag/{tag}', [PostController::class, 'showTag'])->name('posts.by.tag');
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

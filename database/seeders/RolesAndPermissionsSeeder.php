@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 
 class RolesAndPermissionsSeeder extends Seeder
@@ -35,46 +36,36 @@ class RolesAndPermissionsSeeder extends Seeder
         $deleteAllPosts = Permission::firstOrCreate(['name' => 'delete all posts', 'guard_name' => 'web']);
         $deleteAllComments = Permission::firstOrCreate(['name' => 'delete all posts', 'guard_name' => 'web']);
 
+        //creating admin user with higher privellege
+        if (!Role::where('name', 'admin')->exists()) {
+            Role::create(['name' => 'admin']);
+        }
+
+        if (!Role::where('name', 'mod')->exists()) {
+            Role::create(['name' => 'mod']);
+        }
+        $adminUser = User::firstOrCreate(
+            ['email' => 'hass@swansea.ac.uk'],
+            [
+                'username' => 'Admin',
+                'first_name' => 'Hassan',
+                'last_name' => 'Bin Ali',
+                'password' => Hash::make('Swansea123@')
+            ]
+        );
+        $adminUser->assignRole('admin');
+
+        // Create moderator user with some privillege
+        $modUser = User::firstOrCreate(
+            ['email' => 'hussein@swansea.ac.uk'], 
+            [
+                'username' => 'Mod',
+                'first_name' => 'Hussein',
+                'last_name' => 'Bin Ali',
+                'password' => Hash::make('Swansea123@') 
+            ]
+        );
+        $modUser->assignRole('mod');
       
-
-        $user = new User();
-        $user->id = 21;
-        $user->username = 'Admin';
-        $user->first_name='Hassan';
-        $user->last_name='Bin Ali';
-        $user->email = 'hass@swansea.ac.uk';
-        $user->password = bcrypt('Swansea123@'); 
-        $user->save();
-
-        $user = new User();
-        $user->id = 22;
-        $user->username = 'Mod';
-        $user->first_name='Hussein';
-        $user->last_name='Bin Ali';
-        $user->email = 'hussein@swansea.ac.uk';
-        $user->password = bcrypt('Swansea123@'); 
-        $user->save();
-        $user = User::find(21); 
-        $user->assignRole('admin');
-
-
-
-        $admin->givePermissionTo($editPosts);
-        $admin->givePermissionTo($deletePosts);
-        $admin->givePermissionTo($editPosts);
-        $admin->givePermissionTo($deleteUsers);
-        $admin->givePermissionTo($updateUsers);
-        $admin->givePermissionTo($deleteAllComments);
-        $admin->givePermissionTo($deleteAllPosts);
-
-
-        // Assign permissions to user using grantPermissionTo
-        $mod->givePermissionTo($editPosts);
-        $mod->givePermissionTo($deletePosts);
-        $mod->givePermissionTo($createPosts);
-
-
-
-        
     }
 }

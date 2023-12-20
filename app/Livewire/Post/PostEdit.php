@@ -35,32 +35,39 @@ class PostEdit extends Component
             session()->flash('error', 'Unauthorized action.');
             return;
         }
-
         $this->title = $post->title;
         $this->content = $post->content;
     }
-
-
 
     public function edit()
     {
         $user = Auth::user();
         $post = Post::find($this->postId);
-        $this->tryEditing = true; // Set to true when edit is attempted
+        $this->tryEditing = true;
 
-        if($user && ($user->hasRole('admin') || $post->user_id == $user->id)){
+        if (!$post) {
+            session()->flash('error', 'Comment not found.');
+            $this->resetEditing();
+            return;
+        }
+
+        // Check if the user is a moderator and the post author is not an admin
+        if ($user && $user->hasRole('mod') && !$post->user->hasRole('admin')) {
+            $this->isEditing = true;
+            $this->title = $post->title;
+            $this->content = $post->content;
+        }
+        // Check if the user is an admin or the author of the post
+        else if ($user && ($user->hasRole('admin') || $post->user_id == $user->id)) {
             $this->isEditing = true;
             $this->title = $post->title;
             $this->content = $post->content;
         } else {
-            if (!$post) {
-                session()->flash('error', 'Post not found.');
-            } else {
-                session()->flash('error', 'Unauthorized action.');
-            }
-            $this->resetEditing(); 
-            $this->dispatch('postEdited');
+            session()->flash('error', 'Unauthorized action.');
+            $this->resetEditing();
         }
+
+        $this->dispatch('postEdited'); 
     }
 
     private function resetEditing()
@@ -72,8 +79,8 @@ class PostEdit extends Component
     public function updatePost()
     {
         $this->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
+            'title' => 'required|string|max:50|min:10',
+            'content' => 'required|string|max:3000|min:10',
         ]);
 
         $post = Post::find($this->postId);
@@ -91,19 +98,19 @@ class PostEdit extends Component
     }
 
     public function render()
-    
+
     {
         $post = Post::find($this->postId);
 
         return view('livewire.posts.post-edit', [
-            'postId' => Post::all() 
+            'postId' => Post::all()
 
         ]);
     }
 
     public function cancelEdit()
     {
-        $this->isEditing = false; 
+        $this->isEditing = false;
     }
     public function refreshPostData()
     {

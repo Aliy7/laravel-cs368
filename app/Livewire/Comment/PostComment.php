@@ -22,20 +22,18 @@ class PostComment extends Component
         $this->post_id = $post_id;
         $this->getComments();
     }
-
+    protected $rules = [
+        'content' => 'required|string|regex:/^(?=.*[a-zA-Z])[a-zA-Z0-9 .,"\']+$/|max:1000|min:10',
+    ];
     public function updated($propertyName)
     {
-        $this->validateOnly($propertyName, [
-            'content' => 'required',
-        ]);
+        $this->validateOnly($propertyName);
+            
     }
 
     public function submitComment()
     {
-        $this->validate([
-            'content' => 'required',
-        ]);
-
+        $this->validate();
         $comment = new Comment();
         $comment->content = $this->content;
         $comment->post_id = $this->post_id;
@@ -65,7 +63,13 @@ class PostComment extends Component
 
     public function getComments()
     {
+        // $this->comments = Comment::with('user')
+        //                  ->where('post_id', $this->post_id)
+        //                  ->orderBy('created_at', 'asc') // or any other column
+        //                  ->get();
         $this->comments = Comment::where('post_id', $this->post_id)->latest()->get();
+
+        $this->comments = Comment::where('post_id', $this->post_id)->oldest()->get();
 
         $this->dispatch('commentCreated');
     }
@@ -99,6 +103,14 @@ class PostComment extends Component
         'post-updated' => '$postUpdated',
         'createdNotication' => '$createdNot',
         'notificationCreated'=>'$notification',
-        'createdNotication' => '$not'
+        'createdNotication' => '$not',
+        'commentEdited' => 'handleCommentEdited',
+        'comment-updated' =>'$comment-updated',
+      
     ];
+    public function handleCommentEdited($commentId)
+{
+
+}
+
 }

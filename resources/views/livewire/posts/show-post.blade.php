@@ -59,11 +59,13 @@
                             
                              @livewire('post.post-edit', ['postId' => $post->id], key('post-edit-'.$post->id))
                            
-                             @livewire('like-Unlike', ['type' => 'post', 'modelId' => $post->id])
+                             @livewire('likes.like-Unlike', ['type' => 'post', 'modelId' => $post->id])
 
                                <!-- Include the Livewire post-comment component -->
                                
                                @livewire('comment.post-comment', ['post_id' => $post->id], key('post-comment-'.$post->id))
+
+                               
                                {{-- @livewire('post-tag', ['postId' => $post->id], key('post-tags-'.$post->id)) --}}
 
                         </div>
@@ -143,5 +145,31 @@
 
     </div>
 </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            window.livewire.on('postCreated', function () {
+               
+                console.log('Post has been created.');
+            });
 
+            window.livewire.on('post-updated', function () {
+                // Actions when a post is updated
+                console.log('Post has been updated.');
+            });
 
+            window.livewire.on('postDeleted', function () {
+                // Actions when a post is deleted
+                console.log('Post has been deleted.');
+            });
+
+            window.livewire.on('postEdited', function () {
+                // Actions when a post is edited
+                console.log('Post has been edited.');
+            });
+
+            window.livewire.on('commentCreated', function () {
+                // Actions when a comment is added
+                console.log('A new comment has been created.');
+            });
+        });
+    </script>
