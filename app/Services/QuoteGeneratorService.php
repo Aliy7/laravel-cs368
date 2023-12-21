@@ -4,9 +4,11 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
 
-class QuoteGeneratorService implements QuoteGeneratorInterface {
+class QuoteGeneratorService implements QuoteGeneratorInterface
+{
 
-    public function randomQuoteGenerator() {
+    public function randomQuoteGenerator()
+    {
         $response = Http::get('https://zenquotes.io/api/random');
         // $response = Http::get('https://api.quotable.io/random');
         //to use zen quotable change the following 
@@ -15,13 +17,11 @@ class QuoteGeneratorService implements QuoteGeneratorInterface {
         if ($response->successful()) {
             $data = $response->json();
             return [
-                'quote' => $data [0]['q'], //paramter of quote
+                'quote' => $data[0]['q'], //paramter of quote
                 'author' => $data[0]['a'],  // paramter of the Author
             ];
         } else {
             return ['q' => 'Postive self talk is like nurturing your soul', 'a' => 'Xx'];
         }
     }
-
 }
- 

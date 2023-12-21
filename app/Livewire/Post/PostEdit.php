@@ -10,7 +10,7 @@ class PostEdit extends Component
 {
     public $postId;
     public $title;
-    public $content = '';
+    public $content = null;
     public $isEditing = false;
     public $tryEditing = false;
     protected $listeners =
@@ -21,7 +21,6 @@ class PostEdit extends Component
 
     public function mount($postId)
     {
-
         $this->postId = $postId;
         $this->loadPost();
     }
@@ -51,13 +50,13 @@ class PostEdit extends Component
             return;
         }
 
-        // Check if the user is a moderator and the post author is not an admin
+        // Check if the user is a mod
         if ($user && $user->hasRole('mod') && !$post->user->hasRole('admin')) {
             $this->isEditing = true;
             $this->title = $post->title;
             $this->content = $post->content;
         }
-        // Check if the user is an admin or the author of the post
+        // Check if the user is an admin
         else if ($user && ($user->hasRole('admin') || $post->user_id == $user->id)) {
             $this->isEditing = true;
             $this->title = $post->title;

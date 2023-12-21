@@ -23,12 +23,10 @@ class PostTag extends Component
         $posts = $tag->posts()->with('tags')->get();
 
         return view('livewire.tags.post-tag', compact('posts'));
-
     }
 
     public function render()
-    {
-        
+    {  
         return view('livewire.tags.post-tag', ['post' => $this->post])
         ->layout('layouts.app');
     }

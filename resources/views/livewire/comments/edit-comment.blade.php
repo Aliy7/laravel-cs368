@@ -16,7 +16,7 @@
     @if (!$isEditing)
         <!-- Non-edit Mode -->
         <div class="p-4">
-            <button wire:click="edit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</button>
+            <button wire:click="edit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit Comment</button>
         </div>
     @else
         <!-- Edit Mode -->

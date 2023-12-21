@@ -12,7 +12,13 @@ use Livewire\Features\SupportFileUploads\WithFileUploads;
 class ProfileComponent extends Component
 {
     use WithFileUploads;
-    public $username, $email, $first_name, $last_name, $bio, $phone_number, $date_of_birth;
+    public $username;
+    public $email;
+    public $first_name;
+    public $last_name;
+    public $bio;
+    public $phone_number;
+    public $date_of_birth;
     public $image_url;
     public $user;
     public $isEditing = false;

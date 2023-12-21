@@ -47,7 +47,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $adminUser = User::firstOrCreate(
             ['email' => 'hass@swansea.ac.uk'],
             [
-                'username' => 'Admin',
+                'username' => 'Hassan bin Ali',
                 'first_name' => 'Hassan',
                 'last_name' => 'Bin Ali',
                 'password' => Hash::make('Swansea123@')
@@ -59,13 +59,12 @@ class RolesAndPermissionsSeeder extends Seeder
         $modUser = User::firstOrCreate(
             ['email' => 'hussein@swansea.ac.uk'], 
             [
-                'username' => 'Mod',
+                'username' => 'Hussein bin ali',
                 'first_name' => 'Hussein',
                 'last_name' => 'Bin Ali',
                 'password' => Hash::make('Swansea123@') 
             ]
         );
-        $modUser->assignRole('mod');
-      
+        $modUser->assignRole('mod'); 
     }
 }

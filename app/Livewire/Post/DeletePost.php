@@ -71,8 +71,7 @@ class DeletePost extends Component
         // Admin can delete any post or user can delete their own post
         if ($user && ($user->hasRole('admin') || $post->user_id == $user->id)) {
             $post->delete();
-            session()->flash('message', 'Post deleted successfully.');
-         
+           
             return $this;
         }
         $this->dispatch('postDeleted');

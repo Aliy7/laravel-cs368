@@ -11,14 +11,18 @@ class ShowQuote extends Component
     protected $listeners = ['refreshQuote' => 'fetchQuote'];
     public $quote;
 
-    public function mount(QuoteGeneratorService $quoteGeneratorService) {
+    public function mount(QuoteGeneratorService $quoteGeneratorService)
+    {
         $this->quote = $quoteGeneratorService->randomQuoteGenerator();
     }
 
-    public function refreshQuote() {
+    public function refreshQuote()
+    {
         $this->quote = app(QuoteGeneratorService::class)->randomQuoteGenerator();
         $this->dispatch('refreshQuote');
     }
-    public function render() {
- return view('livewire.quote.show-quote');    }
+    public function render()
+    {
+        return view('livewire.quote.show-quote');
+    }
 }

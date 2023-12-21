@@ -1,4 +1,4 @@
-<div wire:poll.12000ms="refreshQuote" class="max-w-lg mx-auto p-4 bg-white shadow-md rounded-lg">
+<div wire:poll.10000ms="refreshQuote" class="max-w-lg mx-auto p-4 bg-white shadow-md rounded-lg">
     @if(isset($quote))
     <h1 class="font-bold text-blue-800"> Wisdom words:</h1>
         <blockquote class="text-lg text-black-800 italic font-semibold">

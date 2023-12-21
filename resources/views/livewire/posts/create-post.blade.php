@@ -24,11 +24,11 @@
 
         <!-- Image Upload Input -->
         <div class="mb-4">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="imageUpload">Upload Photo
-                (Optional)</label>
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="imageUpload">Upload Photo (Optional)</label>
             <input
                 class="block w-full text-sm text-gray-900 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer focus:outline-none dark:text-gray-400 dark:bg-gray-700 dark:border-gray-600"
-                type="file" wire:model="image" id="imageUpload">
+                type="file" wire:model="image" id="imageUpload"
+                accept=".jpeg,.jpg,.png"> <!-- Added accept attribute here -->
             @if ($image)
                 <img src="{{ $image->temporaryUrl() }}" style="max-width: 500px; max-height: 300px;" />
             @endif
@@ -36,6 +36,7 @@
                 <span class="error text-red-500">{{ $message }}</span>
             @enderror
         </div>
+        
 
         <!-- Submit Button -->
         <div class="flex items-center justify-between">

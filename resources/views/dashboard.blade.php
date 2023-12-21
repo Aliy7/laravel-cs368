@@ -5,18 +5,19 @@
             <div>
                 <!-- Other content, if any, can go here -->
             </div>
-            <div>
+            <div class="text-right text-bold text-danger text-blue-500">
                 @if(auth()->check()) <!-- Check if user is authenticated -->
-                    @if(auth()->user()->is_admin && auth()) <!-- Check if user is admin -->
-                        <span class="text-right">{{ __("You're logged in as Admin!") }}</span>
-                    @elseif(auth()->user()->is_mod && auth())
-                        <span class="text-right">{{ __("You're logged in as Mod!") }}</span>
-                    @else
-                        <span class="text-right">{{ __("You're logged in as ") . auth()->user()->username }}</span>
-                    @endif
+                @if(auth()->user()->hasRole('admin')) <!-- Check if user is admin -->
+                    <span class="text-right">{{ __("Logged in as Admin!") }}</span>
+                @elseif(auth()->user()->hasRole('mod'))
+                    <span class="text-right">{{ __("Logged in as Mod!") }}</span>
                 @else
-                    <span class="text-right">{{ __("You're not logged in.") }}</span>
+                    <span class="">{{ __("Logged in as ") . auth()->user()->username }}</span>
                 @endif
+            @else
+                <span class="text-right">{{ __("You're not logged in.") }}</span>
+            @endif
+            
         </div>
     </div>
     

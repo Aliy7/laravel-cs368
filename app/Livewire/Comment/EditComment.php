@@ -35,73 +35,38 @@ class EditComment extends Component
 
         $this->content = $comment->content;
     }
-    // public function edit()
-    // {
-    //     $user = Auth::user();
-    //     $comment = Comment::find($this->commentId);
-    
-    //     if (!$comment) {
-    //         session()->flash('error', 'Comment not found.');
-    //         $this->resetEditing();
-    //         return;
-    //     }
-    
-    //     $this->tryEditing = true;
-    
-    //     // Admins can edit all comments
-    //     if ($user->hasRole('admin')) {
-    //         $this->isEditing = true;
-    //     } 
-    //     // Moderators can edit all comments except those authored by admins
-    //     elseif ($user->hasRole('mod') && !$comment->user->hasRole('admin')) {
-    //         $this->isEditing = true;
-    //     } 
-    //     // Users can edit their own comments
-    //     elseif ($comment->user_id == $user->id) {
-    //         $this->isEditing = true;
-    //     } 
-    //     // If none of the above, deny permission
-    //     else {
-    //         session()->flash('error', 'Unauthorized action.');
-    //         $this->resetEditing();
-    //         $this->dispatch('commentEdited');
-    //     }
-    // }
     public function edit()
-{
-    $user = Auth::user();
-    $comment = Comment::find($this->commentId);
+    {
+        $user = Auth::user();
+        $comment = Comment::find($this->commentId);
 
-    if (!$comment) {
-        session()->flash('error', 'Comment not found.');
-        $this->resetEditing();
-        return;
+        if (!$comment) {
+            session()->flash('error', 'Comment not found.');
+            $this->resetEditing();
+            return;
+        }
+
+        $this->tryEditing = true;
+
+        // Admins can edit all comments
+        if ($user->hasRole('admin')) {
+            $this->isEditing = true;
+            $this->content = $comment->content;
+        }
+        // Moderators can edit all comments except those authored by admins
+        elseif ($user->hasRole('mod') && !$comment->user->hasRole('admin')) {
+            $this->isEditing = true;
+            $this->content = $comment->content; // Ensure moderators see the content
+        }
+        // Users can edit their own comments
+        elseif ($comment->user_id == $user->id) {
+            $this->isEditing = true;
+            $this->content = $comment->content;
+        } else {
+            session()->flash('error', 'Unauthorized action.');
+            $this->resetEditing();
+        }
     }
-
-    $this->tryEditing = true;
-
-    // Admins can edit all comments
-    if ($user->hasRole('admin')) {
-        $this->isEditing = true;
-        $this->content = $comment->content;
-    } 
-    // Moderators can edit all comments except those authored by admins
-    elseif ($user->hasRole('mod') && !$comment->user->hasRole('admin')) {
-        $this->isEditing = true;
-        $this->content = $comment->content; // Ensure moderators see the content
-    } 
-    // Users can edit their own comments
-    elseif ($comment->user_id == $user->id) {
-        $this->isEditing = true;
-        $this->content = $comment->content;
-    } 
-    // If none of the above, deny permission
-    else {
-        session()->flash('error', 'Unauthorized action.');
-        $this->resetEditing();
-    }
-}
-
     private function resetEditing()
     {
         $this->isEditing = false;
@@ -123,11 +88,8 @@ class EditComment extends Component
         $comment->content = $this->content;
         $comment->save();
 
-        
-
         $this->dispatch('comment-updated',  $this->commentId);
         $this->isEditing = false;
-
     }
 
     public function cancelEdit()

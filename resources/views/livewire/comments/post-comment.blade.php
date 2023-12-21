@@ -12,7 +12,7 @@
                        Posted {{ $comment->created_at->diffForHumans() }}
                     </div>
                     </div>
-                    <a href="{{ route('profile.showProfile', $comment->user->id) }}" class="text-blue-500 hover:text-blue-700">
+                    <a href="{{ route('user.posts', $comment->post->user->id) }}" class="text-blue-500 hover:text-blue-700">
                         {{ $comment->user->username }}
                     </a>
                 </div>

@@ -34,18 +34,18 @@ class PostComment extends Component
     public function submitComment()
     {
         $this->validate();
-        $comment = new Comment();
-        $comment->content = $this->content;
-        $comment->post_id = $this->post_id;
-        $comment->user_id = Auth::id();
-        $comment->created_at = now(); 
-        $comment->updated_at = now();
-        $comment->save();
+        $comments = new Comment();
+        $comments->content = $this->content;
+        $comments->post_id = $this->post_id;
+        $comments->user_id = Auth::id();
+        $comments->created_at = now(); 
+        $comments->updated_at = now();
+        $comments->save();
 
         $this->comments = '';
         $this->reset('content');
         $this->getComments();
-        $this->dispatch('commentCreated', content: $comment->content);
+        $this->dispatch('commentCreated', content: $comments->content);
 
         // Display a success message when a comment is posted
         session()->flash('success', 'Comment posted successfully.');
@@ -55,7 +55,7 @@ class PostComment extends Component
         $commentOwner = Auth::user();
     
         if ($postOwner->id !== $commentOwner->id) {
-            $this->makeNotification($commentOwner, $postOwner, $comment->id);
+            $this->makeNotification($commentOwner, $postOwner, $comments->id);
         }
 
     }
@@ -63,13 +63,10 @@ class PostComment extends Component
 
     public function getComments()
     {
-        // $this->comments = Comment::with('user')
-        //                  ->where('post_id', $this->post_id)
-        //                  ->orderBy('created_at', 'asc') // or any other column
-        //                  ->get();
-        $this->comments = Comment::where('post_id', $this->post_id)->latest()->get();
-
-        $this->comments = Comment::where('post_id', $this->post_id)->oldest()->get();
+        $this->comments = Comment::with('user')
+                         ->where('post_id', $this->post_id)
+                         ->orderBy('created_at', 'asc') // or any other column
+                         ->get();
 
         $this->dispatch('commentCreated');
     }
@@ -104,10 +101,12 @@ class PostComment extends Component
         'createdNotication' => '$createdNot',
         'notificationCreated'=>'$notification',
         'createdNotication' => '$not',
-        'commentEdited' => 'handleCommentEdited',
+        // 'commentEdited' => 'handleCommentEdited',
         'comment-updated' =>'$comment-updated',
       
     ];
+
+    //Have a look at event issues tomorrow
     public function handleCommentEdited($commentId)
 {
 

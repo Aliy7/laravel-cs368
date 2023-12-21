@@ -64,8 +64,6 @@
                                <!-- Include the Livewire post-comment component -->
                                
                                @livewire('comment.post-comment', ['post_id' => $post->id], key('post-comment-'.$post->id))
-
-                               
                                {{-- @livewire('post-tag', ['postId' => $post->id], key('post-tags-'.$post->id)) --}}
 
                         </div>
